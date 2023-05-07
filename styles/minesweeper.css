@@ -1,0 +1,86 @@
+/* ============ General Tags ============ */
+
+html {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ============ Classes ============ */
+
+.body {
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    text-align: center;
+    user-select: none; 
+}
+
+.titles h3, .inputContainer {
+    display: inline;
+}
+
+.gameInfo {
+    text-align: center;
+    padding: 5px;
+    background-color: #bdbdbd;
+    font-weight: bold;
+}
+
+.containerTop, .containerMid, .containerBot {
+    width: max-content;
+    border-style: solid;
+}
+
+.containerTop {
+    border-width: 2.5px;
+    border-top-color: white;
+    border-left-color: white;
+    border-right-color: #7b7b7b;
+    border-bottom-color: #7b7b7b;
+}
+
+.containerMid {
+    border-width: 6px;
+    border-color: #bdbdbd;
+}
+
+.containerBot {
+    border-width: 2.5px;
+    border-bottom-color: white;
+    border-right-color: white;
+    border-left-color: #7b7b7b;
+    border-top-color: #7b7b7b;
+}
+
+.hudContainer {
+    width: auto;
+}
+
+/* ============ IDs ============ */
+
+#gridMatrix {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    table-layout: fixed;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#gridMatrix td {
+    width: 18px;
+    height: 18px;
+    padding: 0px;
+}
+
+#gridMatrix td img {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+#gameContainer {
+    margin: 0 auto;
+    width: fit-content;
+    position: relative;
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Stylesheet -->
+    <link href="styles/minesweeper.css" rel="stylesheet">
+    <!-- Browser Tab Icon -->
+    <link rel="icon" type="image/x-icon" href="images/flag.png">
+    <title>Minesweeper</title> 
+</head>
+<body>
+    <!-- Title -->
+    <div class="body">
+        <h1>MINESWEEPER ALPHA</h1>
+
+        <!-- Game Selection Form -->
+        <form class="input" onsubmit="getData(); initGame(); clearTimer(); return false">
+            <span class="inputContainer">
+                <label for="selectDifficulty">Difficulty:</label>
+                <select id="selectDifficulty" onchange="getData();">
+                    <option value="beginner">Beginner (9x9)</option>
+                    <option value="intermediate">Intermediate (16x16)</option>
+                    <option value="expert">Expert (16x30)</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <label for="questionMarks"> || Question Marks (?)</label>
+                <input type="checkbox" id="questionMarks" onclick="gameData.questionMarks = !gameData.questionMarks">
+                <div id="customInputs" hidden>
+                    <br>
+                    <label for="rowsInput">Rows: </label>
+                    <input type="number" value="20" id="rowsInput" required>
+                    <label for="columnsInput">Columns: </label>
+                    <input type="number" value="30" id="columnsInput" required>
+                    <label for="bombsInput">Bombs: </label>
+                    <input type="number" value="145" id="bombsInput" required>
+                    <br>
+                </div>
+            </span>
+
+            <br><br>
+
+            <!-- Start New Game Button -->
+            <div>
+                <button id="submitChoice" style="width: 90px; height: 30px;" type="submit">New Game</button>
+            </div>
+
+            <br><hr><br>
+
+            <!-- Game HUD -->
+    
+            <br>
+    
+            <!-- Game Grid Container -->
+            <div id="gameContainer">
+                <div class="containerTop" class="hudContainer" style="border-bottom:0px;">
+                    <div class="containerMid" class="hudContainer" style="border-bottom:0px;">
+                        <div class="containerBot" class="hudContainer">
+                            <div class="gameInfo">
+                                <span id="flags"></span> || <span id="status"></span> || <span id="time"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="containerTop" class="gridContainer" style="border-top:0px;">
+                    <div class="containerMid" class="gridContainer">
+                        <div class="containerBot" class="gridContainer">
+                            <table id="gridMatrix" oncontextmenu="return false;"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Script -->
+    <script src="scripts/minesweeper.js"></script>
+
+</body>
+</html>
