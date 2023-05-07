@@ -95,7 +95,7 @@ function getData() { // Obtains gameData from the user when new values are intro
 	if (gameData.bombs < 0) {
 		gameData.bombs = 0; // Number of bombs
 		bombInput.value = 0;
-	} else if (gameData.bombs >= gameData.rows * gameData.columns) { // Prevents infinite loop when generating bombs
+	} else if (gameData.bombs >= gameData.rows * gameData.columns) { 
 		gameData.bombs = (gameData.rows * gameData.columns) - 1; // Max number of bombs
 		bombInput.value = gameData.bombs;
 	} 
