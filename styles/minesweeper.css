@@ -53,8 +53,8 @@ html {
     border-top-color: #7b7b7b;
 }
 
-.hudContainer {
-    width: auto;
+.gameInfo img {
+    height: 35px;
 }
 
 /* ============ IDs ============ */
@@ -83,4 +83,9 @@ html {
     margin: 0 auto;
     width: fit-content;
     position: relative;
+}
+
+#preload {
+    position: absolute;
+    top: -1000px;
 }

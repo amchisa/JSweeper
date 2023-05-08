@@ -1,4 +1,4 @@
-// Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.31
+// Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.37
 
 /* ==== Bugs ====
 
@@ -12,7 +12,6 @@
 2. Add life status using the smiley face, which can also serve as a button which, when pressed, restarts the game
 3. Add leaderboard which saves to a permanent file using best scores
 4. Hovering over question mark while left click is pressed shows the question mark pressed down tile 
-5. Texture atlas (merge all textures onto one image) for better performance
 
 */
 
@@ -89,7 +88,7 @@ function getData() { // Obtains gameData from the user when new values are intro
 		rowInput.value = 1;
 	} else if (gameData.rows > 30) {
 		gameData.rows = 30; // Max rows
-		rowInput.value = 30;
+		rowInput.value = 30;   
 	}
 
 	if (gameData.bombs < 0) {
@@ -112,7 +111,7 @@ function initGame() { // Creates playing grid in HTML
 	gameData.gameGrid = [];
 	timeDisplay.innerHTML = "Time: 0";
 	flagDisplay.innerHTML = "Flags: " + gameData.flagsRemaining;
-	statusDisplay.innerHTML = "Status: Alive";
+	appendTile("happyface", statusDisplay);
 
 	for (let y = 0; y < gameData.rows; y++) {
 		gameData.gameGrid[y] = [];
@@ -303,7 +302,6 @@ function winlose(state) { // Flags all unflagged mines if the user wins the game
 		for (let j = 0; j < gameData.columns; j++) { // Going through every tile on the gameGrid to find all the bomb positions
 			let gridState = gameData.gameGrid[i][j]; // Current grid state, i.e. mine, number (1-8), empty
 			let tile = document.getElementById(i + "," + j);
-
 			switch(state) {
 				case "lose":
 					if (gridState == "bomb" && tileImage(tile) != "flag" && state == "lose") { // If the tile is a bomb and doesn't have a flag on it, show a regular bomb
@@ -311,7 +309,6 @@ function winlose(state) { // Flags all unflagged mines if the user wins the game
 					} else if (gridState != "bomb" && tileImage(tile) == "flag" && state == "lose") { // If the tile isn't a bomb and is flagged, show a bomb with an x through it
 						appendTile("notabomb", tile);
 					}
-					statusDisplay.innerHTML = "Status: Dead";
 					break;
 
 				case "win":
@@ -319,12 +316,21 @@ function winlose(state) { // Flags all unflagged mines if the user wins the game
 						appendTile("flag", tile);
 						gameData.flagsRemaining--;
 					}
-					flagDisplay.innerHTML = "Flags: " + gameData.flagsRemaining;
-					statusDisplay.innerHTML = "Status: You Win!";
 					break;
 			}
 		}
 	}
+
+	switch(state) {
+		case "lose":
+			appendTile("deadface", statusDisplay);
+			break;
+		case "win":
+			flagDisplay.innerHTML = "Flags: " + gameData.flagsRemaining;
+			appendTile("sunglassesface", statusDisplay);
+			break;
+	}
+
 	clearTimer();
 	removeEventListeners();
 }
