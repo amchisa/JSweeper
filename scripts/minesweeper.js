@@ -1,6 +1,6 @@
 // Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.61
 
-/* <-- TODO --> 
+/* <------ TODO ------> 
 1. Add more event listeners which on mouse down allow the specific tile to be a empty tile, without revealing its true state
 	1.1. Hovering over question mark while left click is pressed shows the question mark pressed down tile
 2. Add leaderboard which saves to a permanent file using best scores
@@ -10,6 +10,7 @@
 3. Add help/informations screen (possibly activated with a key combination)
 */
 
+/* <!------ DECLARING HTML ELEMENTS AND GLOBAL VARIABLES ------> */
 let customInputs = document.querySelector("#customInputs");
 let rowInput = document.querySelector("#rowsInput");
 let columnInput = document.querySelector("#columnsInput");
@@ -17,8 +18,9 @@ let bombInput = document.querySelector("#bombsInput");
 let flagDisplay = document.querySelector("#flags");
 let timeDisplay = document.querySelector("#time");
 let statusDisplay = document.querySelector("#status");
-let intervalID = ""; // Declaring empty timerID --> Assigned to new timer
+let questionMarks = document.querySelector("#questionMarks");
 
+let intervalID = ""; // Declaring empty timerID --> Assigned to new timer
 let gameData = { // GameData object --> Stores player and game information
     rows: 9,
     columns: 9,
@@ -27,14 +29,28 @@ let gameData = { // GameData object --> Stores player and game information
     tilesRemaining: 71,
     time: 0,
     alive: true,
-    debugMode: true, // Enable debugMode --> Additional game and tile information will be provided in the console
+    debugMode: true, // Enable/Disable debugMode --> If enabled, additional game and tile information will be provided in the console
     initialClick: true,
     questionMarks: false,
     gameGrid: []
 };
 
+/* <!------ HTML FUNCTIONALITY ------> */
+questionMarks.addEventListener("click", function() {
+	gameData.questionMarks = !gameData.questionMarks; // Toggling question marks when checkbox is clicked
+})
+statusDisplay.addEventListener("mousedown", function() { 
+	statusDisplay.getElementsByTagName('img')[0].src = "assets/pressedface.png"; // Status face button is pressed on mouse down
+});
+statusDisplay.addEventListener("mouseup", function() {
+	statusDisplay.getElementsByTagName('img')[0].src = "assets/happyface.png"; // Status face button is back to normal on mouse up
+	getData(); // Gets game data
+	initGame(); // Starting new game
+});
+
 initGame(); // Creates an initial board on the page upon loading
 
+/* <!------ FUNCTIONS ------> */
 function initGame() { // Creates playing grid in HTML
     let gridMatrix = document.querySelector("#gridMatrix"); // Getting the HTML grid-matrix
 	clearInterval(intervalID); // Stops timer
@@ -58,7 +74,7 @@ function initGame() { // Creates playing grid in HTML
         let row = gridMatrix.insertRow(); // Inserts row into HTML
         for (let td = 0; td < gameData.columns; td++) { 
             let tile = row.insertCell(); // Inserts cell into row
-            tile.innerHTML = '<img src="images/coveredtile.png" draggable="false">'; // Adds blank tile for every space on the grid
+            tile.innerHTML = '<img src="assets/coveredtile.png" draggable="false">'; // Adds blank tile for every space on the grid
             tile.id = [tr, td]; // Gives each tile a unique id 
             tile.addEventListener("mouseup", clickTile, false); // Event listener for the user's mouse click (mouseup)
             tile.addEventListener("mousedown", clickTile, false); // Event listener for the user's mouse click (mouseup)
@@ -182,12 +198,12 @@ function clickTile(e) { // Responds to player click event and does the correspon
         gameData.initialClick = false; // Initial click is false
     }
 
-    let tileState = tileImage(tile); // Finding what image is present on the tile
+    let tileState = tileImage(tile); // Finding what asset is present on the tile
     let gridState = gameData.gameGrid[sourceID[0]][sourceID[1]]; // Find tile cell position in the gameGrid
 
     if (e.which == 1 && e.type == "mouseup") {
         appendTile("happyface", statusDisplay);
-		gameData.debugMode ? console.info("Tile Clicked: " + sourceID[0] + ":" + sourceID[1]) : null // Logs sourceID of tile clicked if debugMode is true
+		gameData.debugMode ? console.info(sourceID) : null // Logs sourceID of tile clicked if debugMode is true
 
         if (tileState != "flag" && gridState != "bomb") { // If there is no bomb or flag preventing a click, reveal the state of the tile underneith
             clearTiles(sourceID); // Clears tile which user has clicked on
@@ -196,7 +212,7 @@ function clickTile(e) { // Responds to player click event and does the correspon
         } else if (tileState != "flag" && gridState == "bomb") { // If the tile is not a flag and the tile is in fact a bomb, lose the game and show all mines
             gameData.alive = false; // Player dies
             checkWinCondition(); // Checks whether the game has been won
-            appendTile(("exploded" + gameData.gameGrid[sourceID[0]][sourceID[1]]), tile); // Appends the tile with the exploded mine image
+            appendTile(("exploded" + gameData.gameGrid[sourceID[0]][sourceID[1]]), tile); // Appends the tile with the exploded mine asset
         }
 
     } else if (e.which == 1 && e.type == "mousedown" && tileState != "flag") {
@@ -269,13 +285,13 @@ function isBomb(x, y) { // Returns value of a coordinate on the game grid
     return 0; // Returns 0 if there is no bomb and/or out of bounds
 }
 
-function tileImage(img) { // Grabs picture name from the inlineHTML
-    let imageComponents = String(img.innerHTML).split(/["/.]/); // Splits image tag into parts at quote mark ("), slash (/), and dot(.)
-    return imageComponents[2]; // Returns image name
+function tileImage(img) { // Grabs asset name from the inlineHTML
+    let imageComponents = String(img.innerHTML).split(/["/.]/); // Splits asset's image tag into parts at quote mark ("), slash (/), and dot(.)
+    return imageComponents[2]; // Returns asset/image name
 }
 
-function appendTile(picture, tile) { // Appends tile with the proper image
-    tile.innerHTML = '<img src="images/' + picture + '.png" draggable="false">'; // Appends image name in the proper place
+function appendTile(asset, tile) { // Appends tile with the proper asset
+    tile.innerHTML = `<img src="assets/${asset}.png" draggable="false">`; // Appends asset name in the proper place
 }
 
 function winlose(state) { // Flags all unflagged mines if the user wins the game <---> Reveals all mines if the user loses the game
@@ -335,7 +351,7 @@ function clearTiles(sourceID) { // Clears respective tile
         let gridState = String(gameData.gameGrid[sourceID[0]][sourceID[1]]); // Gets string of cell value
 
         if (tileImage(tile) == "coveredtile" || tileImage(tile) == "questionmark") {
-            appendTile("uncovered" + gridState, tile); // Appends tile with proper image --> (uncovered0-8)
+            appendTile("uncovered" + gridState, tile); // Appends tile with proper asset --> (uncovered0-8)
             gameData.tilesRemaining--; // Subtracts from tiles remaning
             tile.removeEventListener("mousedown", clickTile); // Removes mousedown event listener --> Associated with status changing from happy to suspence faces
 
@@ -360,9 +376,9 @@ function clearTiles(sourceID) { // Clears respective tile
 function checkWinCondition() { // Checks various win conditions against the variables present in the gameData object
 	if (gameData.tilesRemaining == 0) {
         winlose("win"); // Player loses
-        console.log("======== You Win! Your time was: " + gameData.time + " seconds ========");
+		gameData.debugMode ? console.log("You Win! Your time was: " + gameData.time + " seconds") : null; 
     } else if (gameData.alive == false) {
         winlose("lose"); // Player wins
-        console.log("======== You have died. Your time was: " + gameData.time + " seconds ========");
+        gameData.debugMode ? console.log("You have died. Your time was: " + gameData.time + " seconds") : null;
     }
 }
