@@ -58,8 +58,8 @@ function initGame() { // Creates playing grid in HTML
     gameData.alive = true; // Revives player
     gameData.initialClick = true; // Re-enables initial-click
     gameData.gameGrid = []; // Resets gamegrid matrix
-    timeDisplay.innerHTML = "Time: 0"; // Resets timer display
-    flagDisplay.innerHTML = "Flags: " + gameData.flagsRemaining; // Resets flag display
+    timeDisplay.innerHTML = "Time: 000"; // Resets timer display
+    flagDisplay.innerHTML = "Flags: " + ("000" + gameData.flagsRemaining).slice(-3); // Resets flag display
     appendTile("happyface", statusDisplay); // Resets status to default value (happyface)
 	console.clear(); // Clears console
 
@@ -144,7 +144,7 @@ function generateGrid(sourceID) { // Generates a random game grid
     gameData.time = 0; // Resets game time 
     intervalID = setInterval(function() { // Starts game timer (1 sec = 1000 ms)
         gameData.time++;
-        timeDisplay.innerHTML = "Time: " + gameData.time; // Appends time display
+        timeDisplay.innerHTML = "Time: " + ("000" + gameData.time).slice(-3); // Appends time display by slicing off last 3 values from the combined string generated
     }, 1000);
 
     let surroundingTiles = generateSurroudingTiles(sourceID);
@@ -241,7 +241,7 @@ function clickTile(e) { // Responds to player click event and does the correspon
                 break;
         }
 
-        flagDisplay.innerHTML = "Flags: " + gameData.flagsRemaining; // Update flag display with the accurate flags remaining
+        flagDisplay.innerHTML = "Flags: " + ("000" + gameData.flagsRemaining).slice(-3); // Update flag display with the last 3 values of the combined string generated
 		gameData.debugMode ? console.info("Tiles Remaining: " + gameData.tilesRemaining) : null // Log tiles remaining if debugMode is true
     }
 }
@@ -323,7 +323,7 @@ function winlose(state) { // Flags all unflagged mines if the user wins the game
             appendTile("deadface", statusDisplay); // Player has lost --> Append status with dead face 
             break;
         case "win":
-            flagDisplay.innerHTML = "Flags: " + gameData.flagsRemaining; // Displays flags remaining
+            flagDisplay.innerHTML = "Flags: " + ("000" + gameData.flagsRemaining).slice(-3); // Displays flags remaining
             appendTile("sunglassesface", statusDisplay); // Player has won --> Append status with sunglasses face
             break;
     }

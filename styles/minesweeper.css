@@ -89,3 +89,7 @@ html {
     position: absolute;
     top: -300px;
 }
+
+#time {
+    align-content: right;
+}
