@@ -7,44 +7,44 @@
     <!-- CSS Stylesheet -->
     <link href="styles/minesweeper.css" rel="stylesheet">
     <!-- Browser Tab customization -->
-    <link rel="icon" type="image/x-icon" href="images/flag.png">
+    <link rel="icon" type="image/x-icon" href="assets/textures/flag.png">
     <title>Minesweeper</title> 
 </head>
 <body>
     <!-- Preloading textures (reduce flickering) -->
     <div id="preload">
-        <img src="images/bomb.png">
-        <img src="images/coveredtile.png">
-        <img src="images/deadface.png">
-        <img src="images/display0.png">
-        <img src="images/display1.png">
-        <img src="images/display2.png">
-        <img src="images/display3.png">
-        <img src="images/display4.png">
-        <img src="images/display5.png">
-        <img src="images/display6.png">
-        <img src="images/display7.png">
-        <img src="images/display8.png">
-        <img src="images/display9.png">
-        <img src="images/displaynegative.png">
-        <img src="images/explodedbomb.png">
-        <img src="images/flag.png">
-        <img src="images/happyface.png">
-        <img src="images/notabomb.png">
-        <img src="images/pressedface.png">
-        <img src="images/pressedquestionmark.png">
-        <img src="images/questionmark.png">
-        <img src="images/sunglassesface.png">
-        <img src="images/suspenseface.png">
-        <img src="images/uncovered0.png">
-        <img src="images/uncovered1.png">
-        <img src="images/uncovered2.png">
-        <img src="images/uncovered3.png">
-        <img src="images/uncovered4.png">
-        <img src="images/uncovered5.png">
-        <img src="images/uncovered6.png">
-        <img src="images/uncovered7.png">
-        <img src="images/uncovered8.png">
+        <img src="assets/textures/bomb.png">
+        <img src="assets/textures/coveredtile.png">
+        <img src="assets/textures/deadface.png">
+        <img src="assets/textures/display0.png">
+        <img src="assets/textures/display1.png">
+        <img src="assets/textures/display2.png">
+        <img src="assets/textures/display3.png">
+        <img src="assets/textures/display4.png">
+        <img src="assets/textures/display5.png">
+        <img src="assets/textures/display6.png">
+        <img src="assets/textures/display7.png">
+        <img src="assets/textures/display8.png">
+        <img src="assets/textures/display9.png">
+        <img src="assets/textures/displaynegative.png">
+        <img src="assets/textures/explodedbomb.png">
+        <img src="assets/textures/flag.png">
+        <img src="assets/textures/happyface.png">
+        <img src="assets/textures/notabomb.png">
+        <img src="assets/textures/pressedface.png">
+        <img src="assets/textures/pressedquestionmark.png">
+        <img src="assets/textures/questionmark.png">
+        <img src="assets/textures/sunglassesface.png">
+        <img src="assets/textures/suspenseface.png">
+        <img src="assets/textures/uncovered0.png">
+        <img src="assets/textures/uncovered1.png">
+        <img src="assets/textures/uncovered2.png">
+        <img src="assets/textures/uncovered3.png">
+        <img src="assets/textures/uncovered4.png">
+        <img src="assets/textures/uncovered5.png">
+        <img src="assets/textures/uncovered6.png">
+        <img src="assets/textures/uncovered7.png">
+        <img src="assets/textures/uncovered8.png">
     </div>
 
     <!-- Game Title -->
@@ -52,7 +52,7 @@
         <h1>MINESWEEPER</h1>
 
         <!-- Game Selection Form -->
-        <form class="input" onsubmit="initGame(); return false">
+        <form class="input" onsubmit="getData(); initGame(); return false">
             <span class="inputContainer">
                 <!-- Difficulty selector -->
                 <label for="selectDifficulty">Difficulty:</label>
@@ -90,21 +90,21 @@
             <!-- Game container -->
             <div id="gameContainer">
                  <!-- Game HUD container -->
-                <div class="containerTop" class="hudContainer" style="border-bottom:0px;">
-                    <div class="containerMid" class="hudContainer" style="border-bottom:0px;">
-                        <div class="containerBot" class="hudContainer">
+                <div class="containerTop" id="hudContainer" style="border-bottom:0px;">
+                    <div class="containerMid" style="border-bottom:0px;">
+                        <div class="containerBot">
                             <div class="gameInfo">
                                 <span id="flags"></span>
-                                <span id="status"><img src="images/happyface.png" draggable="false"></span>
+                                <span id="status"></span>
                                 <span id="time"></span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Game Grid container -->
-                <div class="containerTop" class="gridContainer" style="border-top:0px;">
-                    <div class="containerMid" class="gridContainer">
-                        <div class="containerBot" class="gridContainer">
+                <div class="containerTop" id="gridContainer" style="border-top:0px;">
+                    <div class="containerMid">
+                        <div class="containerBot">
                             <table id="gridMatrix" oncontextmenu="return false;"></table>
                         </div>
                     </div>
