@@ -1,8 +1,7 @@
 // Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.61
 
 /* <------ TODO ------> 
-1. Add more event listeners which on mouse down allow the specific tile to be a empty tile, without revealing its true state
-	1.1. Hovering over question mark while left click is pressed shows the question mark pressed down tile
+1. Create dropdown menu for selecting difficulty and creating a game at the start
 2. Add leaderboard which saves to a permanent file using best scores
 	2.1. Make json which stores scores permanently
 	2.2 Make script which sorts the json scores and displays them in the proper order in the HTML
@@ -19,7 +18,6 @@ let flagDisplay = document.querySelector("#flags");
 let timeDisplay = document.querySelector("#time");
 let statusDisplay = document.querySelector("#status");
 let questionMarks = document.querySelector("#questionMarks");
-
 let intervalID = ""; // Declaring empty timerID --> Assigned to new timer
 let gameData = { // GameData object --> Stores player and game information
     rows: 9,
@@ -40,12 +38,15 @@ questionMarks.addEventListener("click", function() {
 	gameData.questionMarks = !gameData.questionMarks; // Toggling question marks when checkbox is clicked
 })
 statusDisplay.addEventListener("mousedown", function() { 
-	statusDisplay.getElementsByTagName('img')[0].src = "assets/pressedface.png"; // Status face button is pressed on mouse down
+	statusDisplay.getElementsByTagName('img')[0].src = "assets/textures/pressedface.png"; // Status face button is pressed on mouse down
 });
 statusDisplay.addEventListener("mouseup", function() {
-	statusDisplay.getElementsByTagName('img')[0].src = "assets/happyface.png"; // Status face button is back to normal on mouse up
+	statusDisplay.getElementsByTagName('img')[0].src = "assets/textures/happyface.png"; // Status face button is back to normal on mouse up
 	getData(); // Gets game data
 	initGame(); // Starting new game
+});
+statusDisplay.addEventListener("mouseleave", function() {
+    statusDisplay.getElementsByTagName('img')[0].src = "assets/textures/happyface.png"; // Status face button is back to normal if user moves mouse suddenly out of range
 });
 
 initGame(); // Creates an initial board on the page upon loading
@@ -58,8 +59,15 @@ function initGame() { // Creates playing grid in HTML
     gameData.alive = true; // Revives player
     gameData.initialClick = true; // Re-enables initial-click
     gameData.gameGrid = []; // Resets gamegrid matrix
-    timeDisplay.innerHTML = "Time: 000"; // Resets timer display
-    flagDisplay.innerHTML = "Flags: " + ("000" + gameData.flagsRemaining).slice(-3); // Resets flag display
+    timeDisplay.innerHTML = // Resets timer display
+        `<img src="assets/textures/display0.png" draggable="false">
+        <img src="assets/textures/display0.png" draggable="false">
+        <img src="assets/textures/display0.png" draggable="false">`; 
+    let flagNumerals = ("000" + gameData.flagsRemaining).slice(-3).split(""); 
+    flagDisplay.innerHTML = // Resets flag display
+        `<img src="assets/textures/display${flagNumerals[0]}.png" draggable="false">
+        <img src="assets/textures/display${flagNumerals[1]}.png" draggable="false">
+        <img src="assets/textures/display${flagNumerals[2]}.png" draggable="false">`;
     appendTile("happyface", statusDisplay); // Resets status to default value (happyface)
 	console.clear(); // Clears console
 
@@ -74,7 +82,7 @@ function initGame() { // Creates playing grid in HTML
         let row = gridMatrix.insertRow(); // Inserts row into HTML
         for (let td = 0; td < gameData.columns; td++) { 
             let tile = row.insertCell(); // Inserts cell into row
-            tile.innerHTML = '<img src="assets/coveredtile.png" draggable="false">'; // Adds blank tile for every space on the grid
+            tile.innerHTML = '<img src="assets/textures/coveredtile.png" draggable="false">'; // Adds blank tile for every space on the grid
             tile.id = [tr, td]; // Gives each tile a unique id 
             tile.addEventListener("mouseup", clickTile, false); // Event listener for the user's mouse click (mouseup)
             tile.addEventListener("mousedown", clickTile, false); // Event listener for the user's mouse click (mouseup)
@@ -144,7 +152,11 @@ function generateGrid(sourceID) { // Generates a random game grid
     gameData.time = 0; // Resets game time 
     intervalID = setInterval(function() { // Starts game timer (1 sec = 1000 ms)
         gameData.time++;
-        timeDisplay.innerHTML = "Time: " + ("000" + gameData.time).slice(-3); // Appends time display by slicing off last 3 values from the combined string generated
+        let timeNumerals = ("000" + gameData.time).slice(-3).split(""); 
+        timeDisplay.innerHTML = // Appends time display by slicing off last 3 values from the combined string generated
+            `<img src="assets/textures/display${timeNumerals[0]}.png" draggable="false">
+            <img src="assets/textures/display${timeNumerals[1]}.png" draggable="false">
+            <img src="assets/textures/display${timeNumerals[2]}.png" draggable="false">`;
     }, 1000);
 
     let surroundingTiles = generateSurroudingTiles(sourceID);
@@ -241,7 +253,19 @@ function clickTile(e) { // Responds to player click event and does the correspon
                 break;
         }
 
-        flagDisplay.innerHTML = "Flags: " + ("000" + gameData.flagsRemaining).slice(-3); // Update flag display with the last 3 values of the combined string generated
+        let flagNumerals = ""; // Declairing empty flagNumerals variable
+
+        if (gameData.flagsRemaining >= 0) { // Positive values
+            flagNumerals = ("000" + gameData.flagsRemaining).slice(-3).split("");
+        } else { // Negative Values
+            flagNumerals = ("-" + ("00" + Math.abs(gameData.flagsRemaining)).slice(-2)).split("");
+        }
+
+        flagDisplay.innerHTML = // Update flag display with the last 3 values of the combined array generated
+            `<img src="assets/textures/display${flagNumerals[0]}.png" draggable="false">
+            <img src="assets/textures/display${flagNumerals[1]}.png" draggable="false">
+            <img src="assets/textures/display${flagNumerals[2]}.png" draggable="false">`
+
 		gameData.debugMode ? console.info("Tiles Remaining: " + gameData.tilesRemaining) : null // Log tiles remaining if debugMode is true
     }
 }
@@ -287,11 +311,11 @@ function isBomb(x, y) { // Returns value of a coordinate on the game grid
 
 function tileImage(img) { // Grabs asset name from the inlineHTML
     let imageComponents = String(img.innerHTML).split(/["/.]/); // Splits asset's image tag into parts at quote mark ("), slash (/), and dot(.)
-    return imageComponents[2]; // Returns asset/image name
+    return imageComponents[3]; // Returns asset/image name
 }
 
 function appendTile(asset, tile) { // Appends tile with the proper asset
-    tile.innerHTML = `<img src="assets/${asset}.png" draggable="false">`; // Appends asset name in the proper place
+    tile.innerHTML = `<img src="assets/textures/${asset}.png" draggable="false">`; // Appends asset name in the proper place
 }
 
 function winlose(state) { // Flags all unflagged mines if the user wins the game <---> Reveals all mines if the user loses the game
@@ -323,7 +347,11 @@ function winlose(state) { // Flags all unflagged mines if the user wins the game
             appendTile("deadface", statusDisplay); // Player has lost --> Append status with dead face 
             break;
         case "win":
-            flagDisplay.innerHTML = "Flags: " + ("000" + gameData.flagsRemaining).slice(-3); // Displays flags remaining
+            let flagNumerals = ("000" + gameData.flagsRemaining).slice(-3).split(""); 
+            flagDisplay.innerHTML = // Resets flag display
+                `<img src="assets/textures/display${flagNumerals[0]}.png" draggable="false">
+                <img src="assets/textures/display${flagNumerals[1]}.png" draggable="false">
+                <img src="assets/textures/display${flagNumerals[2]}.png" draggable="false">`;
             appendTile("sunglassesface", statusDisplay); // Player has won --> Append status with sunglasses face
             break;
     }

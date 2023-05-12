@@ -28,7 +28,7 @@ html {
 }
 
 .containerTop, .containerMid, .containerBot {
-    width: max-content;
+    width: fit-content;
     border-style: solid;
 }
 
@@ -87,9 +87,20 @@ html {
 
 #preload {
     position: absolute;
-    top: -300px;
+    top: -500px;
 }
 
-#time {
-    align-content: right;
+#time, #flags {
+    display: inline-block;
+    width: max-content;
+}
+
+#time img, #flags img {
+    height: 30px;
+    float: left;
+}
+
+#status img {
+    width: 30px;
+    height: 30px;
 }
