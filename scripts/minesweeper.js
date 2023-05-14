@@ -1,4 +1,4 @@
-// Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.61
+// Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.64
 
 /* <------ TODO ------> 
 1. Create dropdown menu for selecting difficulty and creating a game at the start
@@ -18,6 +18,7 @@ let flagDisplay = document.querySelector("#flags");
 let timeDisplay = document.querySelector("#time");
 let statusDisplay = document.querySelector("#status");
 let questionMarks = document.querySelector("#questionMarks");
+let gameContainer = document.querySelector("#gameContainer");
 let intervalID = ""; // Declaring empty timerID --> Assigned to new timer
 let gameData = { // GameData object --> Stores player and game information
     rows: 9,
@@ -42,16 +43,23 @@ statusDisplay.addEventListener("mousedown", function() {
 });
 statusDisplay.addEventListener("mouseup", function() {
 	statusDisplay.getElementsByTagName('img')[0].src = "assets/textures/happyface.png"; // Status face button is back to normal on mouse up
-	getData(); // Gets game data
+	getData(); // Gets new game data
 	initGame(); // Starting new game
 });
-statusDisplay.addEventListener("mouseleave", function() {
-    statusDisplay.getElementsByTagName('img')[0].src = "assets/textures/happyface.png"; // Status face button is back to normal if user moves mouse suddenly out of range
+statusDisplay.addEventListener('mouseleave', (e) => {
+    if (e.which == 1) {
+        statusDisplay.getElementsByTagName('img')[0].src = `assets/textures/happyface.png`; // Status face button is back to normal if user moves mouse suddenly out of range while pressed down
+    }
+});
+gameContainer.addEventListener('mouseleave', function() {
+    if (tileImage(statusDisplay) == "suspenseface") {
+        statusDisplay.getElementsByTagName('img')[0].src = `assets/textures/happyface.png`; // Prevents suspense face from getting stuck until mouse comes back to the game
+    }
 });
 
 initGame(); // Creates an initial board on the page upon loading
 
-/* <!------ FUNCTIONS ------> */
+/* <!------ GAME FUNCTIONS ------> */
 function initGame() { // Creates playing grid in HTML
     let gridMatrix = document.querySelector("#gridMatrix"); // Getting the HTML grid-matrix
 	clearInterval(intervalID); // Stops timer
@@ -309,9 +317,9 @@ function isBomb(x, y) { // Returns value of a coordinate on the game grid
     return 0; // Returns 0 if there is no bomb and/or out of bounds
 }
 
-function tileImage(img) { // Grabs asset name from the inlineHTML
-    let imageComponents = String(img.innerHTML).split(/["/.]/); // Splits asset's image tag into parts at quote mark ("), slash (/), and dot(.)
-    return imageComponents[3]; // Returns asset/image name
+function tileImage(tile) { // Grabs asset name from the inlineHTML
+    let imageComponents = String(tile.innerHTML).split(/["/.]/); // Splits asset's image tag into parts at quote mark ("), slash (/), and dot(.)
+    return imageComponents[3]; // Returns asset name
 }
 
 function appendTile(asset, tile) { // Appends tile with the proper asset

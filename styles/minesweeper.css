@@ -25,10 +25,14 @@ html {
     padding: 5px;
     background-color: #bdbdbd;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16.5px; /* NEEDS UPDATING */
 }
 
 .containerTop, .containerMid, .containerBot {
-    width: fit-content;
+    width: max-content;
     border-style: solid;
 }
 
@@ -51,10 +55,6 @@ html {
     border-right-color: white;
     border-left-color: #7b7b7b;
     border-top-color: #7b7b7b;
-}
-
-.gameInfo img {
-    height: 35px;
 }
 
 /* ============ IDs ============ */
@@ -85,19 +85,19 @@ html {
     position: relative;
 }
 
-#preload {
-    position: absolute;
-    top: -500px;
-}
-
 #time, #flags {
     display: inline-block;
     width: max-content;
 }
 
 #time img, #flags img {
-    height: 30px;
+    height: 26px;
     float: left;
+}
+
+#status {
+    display: flex;
+    align-items: center;
 }
 
 #status img {

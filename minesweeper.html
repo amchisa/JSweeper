@@ -12,7 +12,7 @@
 </head>
 <body>
     <!-- Preloading textures (reduce flickering) -->
-    <div id="preload">
+    <div id="preload" hidden>
         <img src="assets/textures/bomb.png">
         <img src="assets/textures/coveredtile.png">
         <img src="assets/textures/deadface.png">
@@ -47,8 +47,8 @@
         <img src="assets/textures/uncovered8.png">
     </div>
 
-    <!-- Game Title -->
     <div class="body">
+        <!-- Game Title -->
         <h1>MINESWEEPER</h1>
 
         <!-- Game Selection Form -->
@@ -90,7 +90,7 @@
             <!-- Game container -->
             <div id="gameContainer">
                  <!-- Game HUD container -->
-                <div class="containerTop" id="hudContainer" style="border-bottom:0px;">
+                <div class="containerTop" style="border-bottom:0px;">
                     <div class="containerMid" style="border-bottom:0px;">
                         <div class="containerBot">
                             <div class="gameInfo">
@@ -102,7 +102,7 @@
                     </div>
                 </div>
                 <!-- Game Grid container -->
-                <div class="containerTop" id="gridContainer" style="border-top:0px;">
+                <div class="containerTop" style="border-top:0px;">
                     <div class="containerMid">
                         <div class="containerBot">
                             <table id="gridMatrix" oncontextmenu="return false;"></table>
@@ -113,7 +113,7 @@
         </div>
     </div>
 
-    <!-- Main JS Script -->
+    <!-- Main JS Script and JSON Leaderboard -->
     <script src="scripts/minesweeper.js"></script>
 </body>
 </html>
