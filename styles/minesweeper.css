@@ -21,18 +21,15 @@ html {
 }
 
 .gameInfo {
-    text-align: center;
     padding: 5px;
     background-color: #bdbdbd;
     font-weight: bold;
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 16.5px; /* NEEDS UPDATING */
+    justify-content: space-between;
 }
 
 .containerTop, .containerMid, .containerBot {
-    width: max-content;
     border-style: solid;
 }
 
@@ -103,4 +100,8 @@ html {
 #status img {
     width: 30px;
     height: 30px;
+}
+
+#customInputs input[type=number] {
+    width: 50px;
 }
