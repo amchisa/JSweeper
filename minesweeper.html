@@ -13,50 +13,51 @@
 <body>
     <!-- Preloading textures (reduce flickering) -->
     <div id="preload" hidden>
-        <img src="assets/textures/bomb.png">
-        <img src="assets/textures/coveredtile.png">
-        <img src="assets/textures/deadface.png">
-        <img src="assets/textures/display0.png">
-        <img src="assets/textures/display1.png">
-        <img src="assets/textures/display2.png">
-        <img src="assets/textures/display3.png">
-        <img src="assets/textures/display4.png">
-        <img src="assets/textures/display5.png">
-        <img src="assets/textures/display6.png">
-        <img src="assets/textures/display7.png">
-        <img src="assets/textures/display8.png">
-        <img src="assets/textures/display9.png">
-        <img src="assets/textures/displaynegative.png">
-        <img src="assets/textures/explodedbomb.png">
-        <img src="assets/textures/flag.png">
-        <img src="assets/textures/happyface.png">
-        <img src="assets/textures/notabomb.png">
-        <img src="assets/textures/pressedface.png">
-        <img src="assets/textures/pressedquestionmark.png">
-        <img src="assets/textures/questionmark.png">
-        <img src="assets/textures/sunglassesface.png">
-        <img src="assets/textures/suspenseface.png">
-        <img src="assets/textures/uncovered0.png">
-        <img src="assets/textures/uncovered1.png">
-        <img src="assets/textures/uncovered2.png">
-        <img src="assets/textures/uncovered3.png">
-        <img src="assets/textures/uncovered4.png">
-        <img src="assets/textures/uncovered5.png">
-        <img src="assets/textures/uncovered6.png">
-        <img src="assets/textures/uncovered7.png">
-        <img src="assets/textures/uncovered8.png">
+        <img alt="preloadedtexture" src="assets/textures/bomb.png">
+        <img alt="preloadedtexture" src="assets/textures/coveredtile.png">
+        <img alt="preloadedtexture" src="assets/textures/display0.png">
+        <img alt="preloadedtexture" src="assets/textures/deadface.png">
+        <img alt="preloadedtexture" src="assets/textures/display1.png">
+        <img alt="preloadedtexture" src="assets/textures/display2.png">
+        <img alt="preloadedtexture" src="assets/textures/display4.png">
+        <img alt="preloadedtexture" src="assets/textures/display3.png">
+        <img alt="preloadedtexture" src="assets/textures/display5.png">
+        <img alt="preloadedtexture" src="assets/textures/display6.png">
+        <img alt="preloadedtexture" src="assets/textures/display7.png">
+        <img alt="preloadedtexture" src="assets/textures/display8.png">
+        <img alt="preloadedtexture" src="assets/textures/display9.png">
+        <img alt="preloadedtexture" src="assets/textures/displaynegative.png">
+        <img alt="preloadedtexture" src="assets/textures/explodedbomb.png">
+        <img alt="preloadedtexture" src="assets/textures/flag.png">
+        <img alt="preloadedtexture" src="assets/textures/happyface.png">
+        <img alt="preloadedtexture" src="assets/textures/notabomb.png">
+        <img alt="preloadedtexture" src="assets/textures/pressedface.png">
+        <img alt="preloadedtexture" src="assets/textures/pressedquestionmark.png">
+        <img alt="preloadedtexture" src="assets/textures/questionmark.png">
+        <img alt="preloadedtexture" src="assets/textures/sunglassesface.png">
+        <img alt="preloadedtexture" src="assets/textures/suspenseface.png">
+        <img alt="preloadedtexture" src="assets/textures/uncovered0.png">
+        <img alt="preloadedtexture" src="assets/textures/uncovered1.png">
+        <img alt="preloadedtexture" src="assets/textures/uncovered2.png">
+        <img alt="preloadedtexture" src="assets/textures/uncovered3.png">
+        <img alt="preloadedtexture" src="assets/textures/uncovered4.png">
+        <img alt="preloadedtexture" src="assets/textures/uncovered5.png">
+        <img alt="preloadedtexture" src="assets/textures/uncovered6.png">
+        <img alt="preloadedtexture" src="assets/textures/uncovered7.png">
+        <img alt="preloadedtexture" src="assets/textures/uncovered8.png">
     </div>
 
     <div class="body">
         <!-- Game Title -->
-        <h1>MINESWEEPER</h1>
+        <h1>MINESWEEPER Version 0.71</h1>
+        <p>Created by Alex Chisa, April-June 2023, ICS4U1a</p>
 
         <!-- Game Selection Form -->
         <form class="input" onsubmit="getData(); initGame(); return false">
-            <span class="inputContainer">
+            <div class="inputContainer">
                 <!-- Difficulty selector -->
                 <label for="selectDifficulty">Difficulty:</label>
-                <select id="selectDifficulty" onchange="getData();">
+                <select id="selectDifficulty">
                     <option value="beginner">Beginner (9x9)</option>
                     <option value="intermediate">Intermediate (16x16)</option>
                     <option value="expert">Expert (16x30)</option>
@@ -66,54 +67,53 @@
                 <label for="questionMarks"> || Question Marks (?)</label>
                 <input type="checkbox" id="questionMarks">
                 <!-- Custom Inputs textboxes -->
-                <div id="customInputs" hidden>
-                    <br>
+                <span id="customInputs" hidden>
+                    <br><br>
                     <label for="rowsInput">Rows: </label>
                     <input type="number" value="20" id="rowsInput" required>
                     <label for="columnsInput">Columns: </label>
                     <input type="number" value="30" id="columnsInput" required>
                     <label for="bombsInput">Bombs: </label>
                     <input type="number" value="145" id="bombsInput" required>
-                    <br>
                 </div>
             </span>
-
+            
             <br><br>
 
             <!-- Start New Game button -->
             <div>
                 <button id="submitChoice" style="width: 90px; height: 30px;" type="submit">New Game</button>
             </div>
+        </form>
 
-            <br><hr><br>
-    
-            <!-- Game container -->
-            <div id="gameContainer">
-                 <!-- Game HUD container -->
-                <div class="containerTop" style="border-bottom:0px;">
-                    <div class="containerMid" style="border-bottom:0px;">
-                        <div class="containerBot">
-                            <div class="gameInfo">
-                                <span id="flags"></span>
-                                <span id="status"></span>
-                                <span id="time"></span>
-                            </div>
+        <br><br>
+
+        <!-- Game container -->
+        <div id="gameContainer">
+                <!-- Game HUD container -->
+            <div class="containerTop" style="border-bottom:0px;">
+                <div class="containerMid" style="border-bottom:0px;">
+                    <div class="containerBot">
+                        <div class="gameInfo">
+                            <span id="flags"></span>
+                            <span id="status"></span>
+                            <span id="time"></span>
                         </div>
                     </div>
                 </div>
-                <!-- Game Grid container -->
-                <div class="containerTop" style="border-top:0px;">
-                    <div class="containerMid">
-                        <div class="containerBot">
-                            <table id="gridMatrix" oncontextmenu="return false;"></table>
-                        </div>
+            </div>
+            <!-- Game Grid container -->
+            <div class="containerTop" style="border-top:0px;">
+                <div class="containerMid">
+                    <div class="containerBot">
+                        <table id="gridMatrix" oncontextmenu="return false;"></table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Main JS Script and JSON Leaderboard -->
+    <!-- Main JS Script -->
     <script src="scripts/minesweeper.js"></script>
 </body>
 </html>
