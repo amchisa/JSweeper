@@ -3,6 +3,7 @@
 /* <------ TODO ------> 
 1. Create dropdown menu for selecting difficulty and creating a game at the start
 2. Add help/informations screen (possibly activated with a key combination)
+3. Add moving empty tile when the mouse is being clicked, which goes away after the mouse button is released
 */
 
 /* <!------ DECLARING HTML ELEMENTS AND GLOBAL VARIABLES ------> */
@@ -27,7 +28,7 @@ const gameData = { // GameData object --> Stores player and game information
     difficulty: "beginner",
     time: 0,
     alive: true,
-    debugMode: false, // Enable/Disable debugMode --> If enabled, additional game and tile information will be provided in the console (affects performance slightly)
+    debugMode: true, // Enable/Disable debugMode --> If enabled, additional game and tile information will be provided in the console (affects performance slightly)
     initialClick: true,
     questionMarks: false,
     gameGrid: []
@@ -51,7 +52,7 @@ statusDisplay.addEventListener("mouseleave", (e) => {
     }
 });
 gameContainer.addEventListener("mouseleave", function() {
-    if (tileAsset(statusDisplay) == "suspenseface") {
+    if (getTile(statusDisplay) == "suspenseface") {
         statusDisplay.getElementsByTagName('img')[0].src = `assets/textures/happyface.png`; // Prevents suspense face from getting stuck until mouse comes back to the game
     }
 });
@@ -77,7 +78,7 @@ function initGame() { // Creates playing grid in HTML (initializes the game)
         `<img src="assets/textures/display${flagNumerals[0]}.png" draggable="false">
         <img src="assets/textures/display${flagNumerals[1]}.png" draggable="false">
         <img src="assets/textures/display${flagNumerals[2]}.png" draggable="false">`;
-    appendTile("happyface", statusDisplay); // Resets status to default value (happyface)
+    setTile("happyface", statusDisplay); // Resets status to default value (happyface)
     gameData.debugMode ? console.clear() : null; // Clears console when debugMode is true
 
     for (let y = 0; y < gameData.rows; y++) {
@@ -189,23 +190,16 @@ function generateGrid(sourceID) { // Randomly generates mines and numbers upon t
 
     for (let y = 0; y < gameData.rows; y++) {
         for (let x = 0; x < gameData.columns; x++) {
-            if (isBomb(x, y) != 1) {
+            if (checkBomb(x, y) != 1) {
                 let bombsSurrounding = ( // Adding up number of bombs in surrounding tiles
-                    isBomb(x - 1, y - 1) // Top left 
-                    +
-                    isBomb(x, y - 1) // Top center
-                    +
-                    isBomb(x + 1, y - 1) // Top right
-                    +
-                    isBomb(x - 1, y) // Center left
-                    +
-                    isBomb(x + 1, y) // Center right
-                    +
-                    isBomb(x - 1, y + 1) // Bottom left
-                    +
-                    isBomb(x, y + 1) // Bottom center
-                    +
-                    isBomb(x + 1, y + 1) // Bottom right
+                    checkBomb(x - 1, y - 1) // Top left 
+                    + checkBomb(x, y - 1) // Top center
+                    + checkBomb(x + 1, y - 1) // Top right
+                    + checkBomb(x - 1, y) // Center left
+                    + checkBomb(x + 1, y) // Center right
+                    + checkBomb(x - 1, y + 1) // Bottom left
+                    + checkBomb(x, y + 1) // Bottom center
+                    + checkBomb(x + 1, y + 1) // Bottom right
                 );
 
                 gameData.gameGrid[y][x] = bombsSurrounding; // Sets the value of the tile on the gameGrid to the number of bombs around it
@@ -227,11 +221,11 @@ function clickTile(e) { // Responds to player click event and does the correspon
         gameData.initialClick = false; // Initial click is false
     }
 
-    let tileState = tileAsset(tile); // Finding what asset is present on the tile
+    let tileState = getTile(tile); // Finding what asset is present on the tile
     let gridState = gameData.gameGrid[sourceID[0]][sourceID[1]]; // Find tile cell position in the gameGrid
 
     if (e.which == 1 && e.type == "mouseup") {
-        appendTile("happyface", statusDisplay);
+        setTile("happyface", statusDisplay);
 
         if (tileState != "flag" && gridState != "bomb") { // If there is no bomb or flag preventing a click, reveal the state of the tile underneith
             clearTiles(sourceID); // Clears tile which user has clicked on
@@ -240,37 +234,47 @@ function clickTile(e) { // Responds to player click event and does the correspon
         } else if (tileState != "flag" && gridState == "bomb") { // If the tile is not a flag and the tile is in fact a bomb, lose the game and show all mines
             gameData.alive = false; // Player dies
             checkWinCondition(); // Checks whether the game has been won
-            appendTile(("exploded" + gameData.gameGrid[sourceID[0]][sourceID[1]]), tile); // Appends the tile with the exploded mine asset
+            setTile(("exploded" + gameData.gameGrid[sourceID[0]][sourceID[1]]), tile); // Appends the tile with the exploded mine asset
         }
 
         gameData.debugMode ? console.log(sourceID) : null; // Logs sourceID of tile left clicked if debugMode is true
         gameData.debugMode ? console.log("Tiles Remaining: " + gameData.tilesRemaining) : null; // Log tiles remaining if debugMode is true
 
     } else if (e.which == 1 && e.type == "mousedown" && tileState != "flag") {
-        appendTile("suspenseface", statusDisplay); // Appends suspense face on left mouse down, providing it meets the conditions
+        setTile("suspenseface", statusDisplay); // Appends suspense face on left mouse down, providing it meets the conditions
+        setTile(("pressed" + getTile(tile)), tile); // Shows pressed tile (temporary)
+        tile.addEventListener("mouseleave", function(e) { // Removes the pressed tile and its event listener when the user moves their mouse out of it
+            if (getTile(tile) == "pressedquestionmark") {
+                setTile("questionmark", tile);
+                this.removeEventListener;
+            } else if (getTile(tile) == "pressedcoveredtile") {
+                setTile("coveredtile", tile);
+                this.removeEventListener;
+            }
+        });
 
     } else if (e.which == 3 && e.type == "mousedown") {
         gameData.debugMode ? console.log(sourceID) : null; // Logs sourceID of tile right clicked if debugMode is true
 
         switch (tileState) {
             case "coveredtile":
-                appendTile("flag", tile);
+                setTile("flag", tile);
                 gameData.flagsRemaining--; // Subtracts from flags remaining
                 checkWinCondition();
                 break;
 
             case "flag":
                 if (gameData.questionMarks) {
-                    appendTile("questionmark", tile); // Append question mark if it is selected
+                    setTile("questionmark", tile); // Append question mark if it is selected
                 } else {
-                    appendTile("coveredtile", tile); // Remove flag
+                    setTile("coveredtile", tile); // Remove flag
                 }
 
                 gameData.flagsRemaining++; // Add to flags remaining
                 break;
 
             case "questionmark":
-                appendTile("coveredtile", tile); // Remove question mark
+                setTile("coveredtile", tile); // Remove question mark
                 break;
         }
 
@@ -319,7 +323,7 @@ function inBounds(x, y) { // Checks whether tile is out of bounds
     return false; // Tile is out of bounds
 }
 
-function isBomb(x, y) { // Returns value of a coordinate on the game grid
+function checkBomb(x, y) { // Returns value of a coordinate on the game grid
     if (inBounds(x, y)) { // Making sure coordinates don't fall outside of the grid
         let gridState = gameData.gameGrid[y][x]; // Finds gridstate
         if (gridState == "bomb") {
@@ -330,12 +334,12 @@ function isBomb(x, y) { // Returns value of a coordinate on the game grid
     return 0; // Returns 0 if there is no bomb and/or out of bounds
 }
 
-function tileAsset(tile) { // Grabs asset name from the tile's img tag and returns its name
+function getTile(tile) { // Grabs asset name from the tile's img tag and returns its name
     let imageComponents = String(tile.innerHTML).split(/["/.]/); // Splits asset's image tag into parts at quote mark ("), slash (/), and dot(.)
     return imageComponents[3]; // Returns asset name
 }
 
-function appendTile(asset, tile) { // Appends tile with the proper asset
+function setTile(asset, tile) { // Appends tile with the proper asset
     tile.innerHTML = `<img src="assets/textures/${asset}.png" draggable="false">`; // Appends asset name in the proper place
 }
 
@@ -346,16 +350,16 @@ function winlose(state) { // Flags all unflagged mines if the user wins the game
             let tile = document.getElementById(i + "," + j);
             switch (state) {
                 case "lose":
-                    if (gridState == "bomb" && tileAsset(tile) != "flag" && state == "lose") {
-                        appendTile("bomb", tile); // If the tile is a bomb and doesn't have a flag on it, show a regular bomb
-                    } else if (gridState != "bomb" && tileAsset(tile) == "flag" && state == "lose") {
-                        appendTile("notabomb", tile); // If the tile isn't a bomb and is flagged, show a bomb with an x through it
+                    if (gridState == "bomb" && getTile(tile) != "flag" && state == "lose") {
+                        setTile("bomb", tile); // If the tile is a bomb and doesn't have a flag on it, show a regular bomb
+                    } else if (gridState != "bomb" && getTile(tile) == "flag" && state == "lose") {
+                        setTile("notabomb", tile); // If the tile isn't a bomb and is flagged, show a bomb with an x through it
                     }
                     break;
 
                 case "win":
-                    if (gridState == "bomb" && tileAsset(tile) != "flag") {
-                        appendTile("flag", tile); // If the tile is a bomb and doesn't have a flag on it, put a flag on it
+                    if (gridState == "bomb" && getTile(tile) != "flag") {
+                        setTile("flag", tile); // If the tile is a bomb and doesn't have a flag on it, put a flag on it
                         gameData.flagsRemaining--; // Substract from flags remaining
                     }
                     break;
@@ -365,7 +369,7 @@ function winlose(state) { // Flags all unflagged mines if the user wins the game
 
     switch (state) { // Appending proper status display textures
         case "lose":
-            appendTile("deadface", statusDisplay); // Player has lost --> Append status with dead face 
+            setTile("deadface", statusDisplay); // Player has lost --> Append status with dead face 
             break;
         case "win":
             let flagNumerals = ("000" + gameData.flagsRemaining).slice(-3).split("");
@@ -373,15 +377,15 @@ function winlose(state) { // Flags all unflagged mines if the user wins the game
                 `<img src="assets/textures/display${flagNumerals[0]}.png" draggable="false">
                 <img src="assets/textures/display${flagNumerals[1]}.png" draggable="false">
                 <img src="assets/textures/display${flagNumerals[2]}.png" draggable="false">`;
-            appendTile("sunglassesface", statusDisplay); // Player has won --> Append status with sunglasses face
+            setTile("sunglassesface", statusDisplay); // Player has won --> Append status with sunglasses face
             break;
     }
 
     clearInterval(timerID); // Stops timer
-    removeEventListeners();
+    removeELs();
 }
 
-function removeEventListeners() { // Removes all tile event listeners
+function removeELs() { // Removes all tile event listeners
     for (let i = 0; i < gameData.rows; i++) {
         for (let j = 0; j < gameData.columns; j++) {
             let tile = document.getElementById(i + "," + j);
@@ -399,8 +403,8 @@ function clearTiles(sourceID) { // Clears respective tile
         let tile = document.getElementById(sourceID[0] + "," + sourceID[1]); // Gets tile
         let gridState = String(gameData.gameGrid[sourceID[0]][sourceID[1]]); // Gets string of cell value
 
-        if (tileAsset(tile) == "coveredtile" || tileAsset(tile) == "questionmark") {
-            appendTile("uncovered" + gridState, tile); // Appends tile with proper asset --> (uncovered0-8)
+        if (getTile(tile) == "questionmark" || getTile(tile) == "coveredtile" || getTile(tile) == "pressedquestionmark" || getTile(tile) == "pressedcoveredtile") {
+            setTile(("uncovered" + gridState), tile); // Appends tile with proper asset --> (uncovered0-8)
             gameData.tilesRemaining--; // Subtracts from tiles remaining
             tile.removeEventListener("mousedown", clickTile); // Removes mousedown event listener --> Associated with status changing from happy to suspence faces
             tile.removeEventListener("mouseup", clickTile); // Prevents mouseup event listener from triggering after tile is clicked --> Helps performance
