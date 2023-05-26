@@ -1,0 +1,76 @@
+Create FUNCTION called createGrid with no parameters:
+	FOR LOOP:
+	LET increment variable "gridYcoordinate" equal 0
+	While variable is less than number of rows selected by user
+	Increment variable by 1
+
+		Create Array within "grid" array at [gridYcoordinate] 
+
+		FOR LOOP:
+		LET increment variable "gridXcoordinate" equal 0
+		Increment variable by 1
+		
+		Create Empty value within gridYcoordinate array at [gridXcoordinate]
+	
+	Call generateGrid function to generate a random grid
+	
+	FOR LOOP:
+	LET increment variable "gridYcoordinate" equal 0
+	While variable is less than number of rows selected by user
+	Increment variable by 1
+		
+		Create HTML tr element
+		
+		FOR LOOP:
+		LET increment variable "gridXcoordinate" equal 0
+		Increment variable by 1
+
+			Create HTML td element inside HTML tr element
+			LET td element equal grid value at [gridYcoordinate][gridXcoordinate] 
+			Add event listener which listens for user click
+
+Create FUNCTION called generateGrid with no parameters:
+	FOR LOOP:
+	LET increment variable equal 0
+	While variable is less than number of bombs selected by user
+	Increment variable by 1
+		LET bombXcoordinate equal random integer within 0 and number of columns
+		LET bombYcoordinate equal random integer within 0 and number of rows
+
+		IF (grid at [bombXcoordinate][bombYcoordinate] is equal to bomb):
+			Redo loop by deincrementing counter variable by 1
+		ELSE:
+			LET grid at [bombXcoordinate][bombYcoordinate] equal bomb
+
+	FOR LOOP:
+	LET increment variable "gridYcoordinate" equal 0
+	While variable is less than number of rows selected by user
+	Increment variable by 1
+		FOR LOOP:
+		LET increment variable "gridXcoordinate" equal 0
+		Increment variable by 1
+		
+			LET "numberOfSurroundingBombs" variable equal 0
+			
+			IF (checkCoordinate at (gridXcoordinate, gridYcoordinate) says There is NOBOMB):
+				LET numberOFSurroundingBombs equal the integer value of the following expression (0 - No bomb or 1 - Bomb)
+
+				checkCoordinate at (gridXcoordinate - 1, gridYcoordinate - 1) -- Top left square 
+				+ checkCoordinate at (gridXcoordinate, gridYcoordinate - 1) -- Top center square 
+                		+ checkCoordinate at (gridXcoordinate + 1, gridYcoordinate - 1) -- Top right square  
+               			+ checkCoordinate at (gridXcoordinate - 1, gridYcoordinate) -- Center left square  
+                		+ checkCoordinate at (gridXcoordinate + 1, gridYcoordinate) -- Center right square  
+                		+ checkCoordinate at (gridXcoordinate - 1, gridYcoordinate + 1) -- Bottom left square  
+                		+ checkCoordinate at (gridXcoordinate, gridYcoordinate + 1) -- Bottom center square  
+                		+ checkCoordinate at (gridXcoordinate + 1, gridYcoordinate + 1) -- Bottom right square  
+				
+				LET grid at [gridXcoordinate][gridYcoordinate] equal numberOfSurroundingBombs
+
+Create FUNCTION called checkCoordinate with two parameters, (gridXcoordinate, gridYcoordinate):
+	IF (grid at [gridXcoordinate][gridYcoordinate] is equal to bomb)
+		Return: There is a BOMB, value of 1
+	ELSE 
+		Return: There is NOBOMB, value of 0
+	
+		
+		

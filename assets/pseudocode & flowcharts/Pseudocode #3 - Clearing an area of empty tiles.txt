@@ -1,0 +1,3 @@
+Create FUNCTION called clearSpaces with one parameter (cell):
+    Work in progress...
+

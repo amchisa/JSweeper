@@ -1,0 +1,69 @@
+Create FUNCTION called clickTile with event parameter:
+	LET cell equal cell that user clicked on
+	LET cellState equal state/value of the cell that was clicked on
+	LET gridState equal state of the game grid at the location of the cell
+	LET spacesRemaining equal total rows times total columns - total bombs
+	LET flagsRemaining equal total bombs
+	LET bombsRemaining equal total bombs
+
+	SWITCH(CLICK TYPE):
+		CASE LEFT:
+			IF (user is clicking for the first time and gridState is equal to bomb):
+				Regenerate grid (pseudocode #1)
+			ELSE IF (cellState does not equal flag and gridState does not equal bomb):
+				Append tile with gridState
+				Remove 1 from spaces remaining
+				Remove event listeners from cell
+				Check Win Condition
+			ELSE IF (cellState does not equal flag and gridState is equal to bomb):
+				Reveal all mines
+				Update visible game grid with exploded mine texture
+				End function
+			BREAK
+			ELSE IF (cellState does not equal flag and gridState is equal to empty tile):
+				Clear area of empty tiles (pseudocode #3)
+		
+		CASE RIGHT: 
+			SWITCH(cellState):
+				CASE covered tile:
+					IF (gridState is equal tobomb):
+						Remove 1 from bombsRemaining
+					Append tile with flag texture
+					Remove 1 from flagsRemaining
+					BREAK
+				CASE flag:
+					IF (gridstate is equal tobomb):
+						Add 1 to bombsRemaining
+					Append tile with question mark texture
+					Add 1 to flagsRemaining
+					BREAK
+				CASE question mark:
+					Append tile with default texture
+					BREAK
+			BREAK
+
+Create FUNCTION called revealMines with no parameters:
+	LET increment variable "i" equal 0
+	While variable is less than number of rows selected by user
+	Increment variable by 1
+		FOR LOOP:
+		LET increment variable "j" equal 0
+		Increment variable by 1
+			LET gridState equal grid at [j][i]
+			LET cell equal cell at [j][i]
+			IF (gridState is equal to bomb and cell does not equal flag):
+				Append tile with bomb texture
+			ELSE IF (gridState does not equal bomb and cell is equal to flag):
+				Append tile with bomb texture with X through it
+				Remove event listeners from cell
+				LET variable playerAlive equal false
+				checkWinCondition
+		
+Create FUNCTION called checkWinCondition with no parameters:
+	IF (bombsRemaining is equal to 0 and flagsRemaining is equal to 0 || spacesRemaining is equal to 0):
+		Player wins
+	ELSE IF (playerAlive is equal to false):
+		Player Loses
+        
+	
+	

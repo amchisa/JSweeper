@@ -1,4 +1,4 @@
-// Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.71
+// Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.76
 
 /* <------ TODO ------> 
 1. Create dropdown menu for selecting difficulty and creating a game at the start
