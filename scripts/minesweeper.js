@@ -1,9 +1,9 @@
-// Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.76
+// Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.80
 
 /* <------ TODO ------> 
-1. Create dropdown menu for selecting difficulty and creating a game at the start
-2. Add help/informations screen (possibly activated with a key combination)
-3. Add moving empty tile when the mouse is being clicked, which goes away after the mouse button is released
+1. Improve styling, and make the div containing the game draggable like a application on a computer monitor
+2. Make the mouse dragging press down every tile it is over
+    a. Bug when moving mouse too fast, cannot be fixed due to nature of mouse
 */
 
 /* <!------ DECLARING HTML ELEMENTS AND GLOBAL VARIABLES ------> */
@@ -17,7 +17,10 @@ const flagDisplay = document.querySelector("#flags");
 const timeDisplay = document.querySelector("#time");
 const statusDisplay = document.querySelector("#status");
 const gameContainer = document.querySelector("#gameContainer");
+const inputContainer = document.querySelector("#inputContainer");
 const gridMatrix = document.querySelector("#gridMatrix");
+const openGameOptions = document.querySelector("#openGameOptions");
+const submitButtom = document.querySelector("#submitChoice")
 let timerID; // Declaring empty timerID --> Assigned to new timer
 const gameData = { // GameData object --> Stores player and game information
     rows: 9,
@@ -28,7 +31,7 @@ const gameData = { // GameData object --> Stores player and game information
     difficulty: "beginner",
     time: 0,
     alive: true,
-    debugMode: true, // Enable/Disable debugMode --> If enabled, additional game and tile information will be provided in the console (affects performance slightly)
+    debugMode: false, // Enable/Disable debugMode --> If enabled, additional game and tile information will be provided in the console (affects performance slightly)
     initialClick: true,
     questionMarks: false,
     gameGrid: []
@@ -37,6 +40,9 @@ const gameData = { // GameData object --> Stores player and game information
 /* <!------ HTML FUNCTIONALITY ------> */
 questionMarks.addEventListener("click", function() {
     gameData.questionMarks = !gameData.questionMarks; // Toggling question marks when checkbox is clicked
+});
+openGameOptions.addEventListener("click", function() { 
+    inputContainer.style.display == "none" ? inputContainer.style.display = "block" : inputContainer.style.display = "none"; // Opening dropdown gameoptions menu
 });
 statusDisplay.addEventListener("mousedown", function() {
     statusDisplay.getElementsByTagName('img')[0].src = "assets/textures/pressedface.png"; // Status face button is pressed on mouse down
@@ -58,6 +64,12 @@ gameContainer.addEventListener("mouseleave", function() {
 });
 difficultySelector.addEventListener("change", function() {
     difficultySelector.value == "custom" ? customInputs.hidden = false : customInputs.hidden = true; // Reveals or hides the custom difficulty settings based on the selected difficulty
+});
+inputContainer.addEventListener("mouseleave", function() { 
+    inputContainer.style.display = "none"; // Closes gameoptions dropdown menu when the mouse leaves it
+})
+submitChoice.addEventListener("click", function() { 
+    inputContainer.style.display = "none"; // Closes gameoptions menu when new game is pressed
 });
 
 initGame(); // Creates an initial board on the page upon loading
@@ -96,8 +108,14 @@ function initGame() { // Creates playing grid in HTML (initializes the game)
             tile.id = [tr, td]; // Gives each tile a unique id pertaining to its position on the grid
             tile.addEventListener("mouseup", clickTile, false); // Event listener for the user's mouse click (mouseup)
             tile.addEventListener("mousedown", clickTile, false); // Event listener for the user's mouse click (mouseup)
+            tile.addEventListener("mouseleave", handleMouseLeave, false); // Removes the pressed tile and its event listener when the user moves their mouse out of it
         }
     }
+}
+
+function handleMouseLeave() { // Returns tile back to normal when mouse exits, slightly bugged because JavaScript is occasionally too slow to catch the mouse event
+    let tile = document.getElementById(this.id);
+    setTile(getTile(tile).replace("pressed", ""), tile); 
 }
 
 function getData() { // Obtains gameData from the user when new values are introduced
@@ -226,6 +244,8 @@ function clickTile(e) { // Responds to player click event and does the correspon
 
     if (e.which == 1 && e.type == "mouseup") {
         setTile("happyface", statusDisplay);
+        gameData.debugMode ? console.log(sourceID) : null; // Logs sourceID of tile left clicked if debugMode is true
+        gameData.debugMode ? console.log("Tiles Remaining: " + gameData.tilesRemaining) : null; // Log tiles remaining if debugMode is true
 
         if (tileState != "flag" && gridState != "bomb") { // If there is no bomb or flag preventing a click, reveal the state of the tile underneith
             clearTiles(sourceID); // Clears tile which user has clicked on
@@ -237,21 +257,9 @@ function clickTile(e) { // Responds to player click event and does the correspon
             setTile(("exploded" + gameData.gameGrid[sourceID[0]][sourceID[1]]), tile); // Appends the tile with the exploded mine asset
         }
 
-        gameData.debugMode ? console.log(sourceID) : null; // Logs sourceID of tile left clicked if debugMode is true
-        gameData.debugMode ? console.log("Tiles Remaining: " + gameData.tilesRemaining) : null; // Log tiles remaining if debugMode is true
-
-    } else if (e.which == 1 && e.type == "mousedown" && tileState != "flag") {
+    } else if (e.which == 1 && e.type == "mousedown" && (tileState == "coveredtile" || tileState == "questionmark")) {
         setTile("suspenseface", statusDisplay); // Appends suspense face on left mouse down, providing it meets the conditions
         setTile(("pressed" + getTile(tile)), tile); // Shows pressed tile (temporary)
-        tile.addEventListener("mouseleave", function(e) { // Removes the pressed tile and its event listener when the user moves their mouse out of it
-            if (getTile(tile) == "pressedquestionmark") {
-                setTile("questionmark", tile);
-                this.removeEventListener;
-            } else if (getTile(tile) == "pressedcoveredtile") {
-                setTile("coveredtile", tile);
-                this.removeEventListener;
-            }
-        });
 
     } else if (e.which == 3 && e.type == "mousedown") {
         gameData.debugMode ? console.log(sourceID) : null; // Logs sourceID of tile right clicked if debugMode is true
@@ -290,6 +298,7 @@ function clickTile(e) { // Responds to player click event and does the correspon
             `<img src="assets/textures/display${flagNumerals[0]}.png" draggable="false">
             <img src="assets/textures/display${flagNumerals[1]}.png" draggable="false">
             <img src="assets/textures/display${flagNumerals[2]}.png" draggable="false">`;
+
     }
 }
 
@@ -391,6 +400,7 @@ function removeELs() { // Removes all tile event listeners
             let tile = document.getElementById(i + "," + j);
             tile.removeEventListener("mouseup", clickTile);
             tile.removeEventListener("mousedown", clickTile);
+            tile.removeEventListener("mouseleave", handleMouseLeave);
         }
     }
 }
@@ -407,7 +417,6 @@ function clearTiles(sourceID) { // Clears respective tile
             setTile(("uncovered" + gridState), tile); // Appends tile with proper asset --> (uncovered0-8)
             gameData.tilesRemaining--; // Subtracts from tiles remaining
             tile.removeEventListener("mousedown", clickTile); // Removes mousedown event listener --> Associated with status changing from happy to suspence faces
-            tile.removeEventListener("mouseup", clickTile); // Prevents mouseup event listener from triggering after tile is clicked --> Helps performance
 
             if (gridState == "0") {
                 let surroundingTiles = determineSurroudingTiles(sourceID); // Gets surrounding tiles if tile click on is empty

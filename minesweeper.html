@@ -1,123 +1,127 @@
+<!-- Created by Alex Chisa, April-June 2023, ICS4U1a -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS Stylesheet -->
     <link href="styles/minesweeper.css" rel="stylesheet">
-    <!-- Browser Tab customization -->
-    <link rel="icon" type="image/x-icon" href="assets/textures/flag.png">
+    <link rel="stylesheet" href="https://unpkg.com/xp.css"> <!-- Custom Stylesheet -->
+    <link rel="icon" type="image/x-icon" href="assets/textures/flag.png"> 
     <title>Minesweeper</title>   
 </head>
 <body>
-    <!-- Preloading textures (reduce flickering) -->
-    <div id="preload" hidden>
-        <img alt="preloadedtexture" src="assets/textures/bomb.png">
-        <img alt="preloadedtexture" src="assets/textures/coveredtile.png">
-        <img alt="preloadedtexture" src="assets/textures/display0.png">
-        <img alt="preloadedtexture" src="assets/textures/deadface.png">
-        <img alt="preloadedtexture" src="assets/textures/display1.png">
-        <img alt="preloadedtexture" src="assets/textures/display2.png">
-        <img alt="preloadedtexture" src="assets/textures/display4.png">
-        <img alt="preloadedtexture" src="assets/textures/display3.png">
-        <img alt="preloadedtexture" src="assets/textures/display5.png">
-        <img alt="preloadedtexture" src="assets/textures/display6.png">
-        <img alt="preloadedtexture" src="assets/textures/display7.png">
-        <img alt="preloadedtexture" src="assets/textures/display8.png">
-        <img alt="preloadedtexture" src="assets/textures/display9.png">
-        <img alt="preloadedtexture" src="assets/textures/displaynegative.png">
-        <img alt="preloadedtexture" src="assets/textures/explodedbomb.png">
-        <img alt="preloadedtexture" src="assets/textures/flag.png">
-        <img alt="preloadedtexture" src="assets/textures/happyface.png">
-        <img alt="preloadedtexture" src="assets/textures/notabomb.png">
-        <img alt="preloadedtexture" src="assets/textures/pressedface.png">
-        <img alt="preloadedtexture" src="assets/textures/pressedquestionmark.png">
-        <img alt="preloadedtexture" src="assets/textures/questionmark.png">
-        <img alt="preloadedtexture" src="assets/textures/sunglassesface.png">
-        <img alt="preloadedtexture" src="assets/textures/suspenseface.png">
-        <img alt="preloadedtexture" src="assets/textures/uncovered0.png">
-        <img alt="preloadedtexture" src="assets/textures/uncovered1.png">
-        <img alt="preloadedtexture" src="assets/textures/uncovered2.png">
-        <img alt="preloadedtexture" src="assets/textures/uncovered3.png">
-        <img alt="preloadedtexture" src="assets/textures/uncovered4.png">
-        <img alt="preloadedtexture" src="assets/textures/uncovered5.png">
-        <img alt="preloadedtexture" src="assets/textures/uncovered6.png">
-        <img alt="preloadedtexture" src="assets/textures/uncovered7.png">
-        <img alt="preloadedtexture" src="assets/textures/uncovered8.png">
-        <img alt="preloadedtexture" src="assets/textures/pressedcoveredtile.png">
-        <img alt="preloadedtexture" src="assets/textures/pressedquestionmark.png">
-    </div>
+    <section>
+        <div id="preload" hidden> <!-- Preloading textures (reduce flickering) -->
+            <img alt="preloadedtexture" src="assets/textures/bomb.png">
+            <img alt="preloadedtexture" src="assets/textures/coveredtile.png">
+            <img alt="preloadedtexture" src="assets/textures/display0.png">
+            <img alt="preloadedtexture" src="assets/textures/deadface.png">
+            <img alt="preloadedtexture" src="assets/textures/display1.png">
+            <img alt="preloadedtexture" src="assets/textures/display2.png">
+            <img alt="preloadedtexture" src="assets/textures/display4.png">
+            <img alt="preloadedtexture" src="assets/textures/display3.png">
+            <img alt="preloadedtexture" src="assets/textures/display5.png">
+            <img alt="preloadedtexture" src="assets/textures/display6.png">
+            <img alt="preloadedtexture" src="assets/textures/display7.png">
+            <img alt="preloadedtexture" src="assets/textures/display8.png">
+            <img alt="preloadedtexture" src="assets/textures/display9.png">
+            <img alt="preloadedtexture" src="assets/textures/displaynegative.png">
+            <img alt="preloadedtexture" src="assets/textures/explodedbomb.png">
+            <img alt="preloadedtexture" src="assets/textures/flag.png">
+            <img alt="preloadedtexture" src="assets/textures/happyface.png">
+            <img alt="preloadedtexture" src="assets/textures/notabomb.png">
+            <img alt="preloadedtexture" src="assets/textures/pressedface.png">
+            <img alt="preloadedtexture" src="assets/textures/pressedquestionmark.png">
+            <img alt="preloadedtexture" src="assets/textures/questionmark.png">
+            <img alt="preloadedtexture" src="assets/textures/sunglassesface.png">
+            <img alt="preloadedtexture" src="assets/textures/suspenseface.png">
+            <img alt="preloadedtexture" src="assets/textures/uncovered0.png">
+            <img alt="preloadedtexture" src="assets/textures/uncovered1.png">
+            <img alt="preloadedtexture" src="assets/textures/uncovered2.png">
+            <img alt="preloadedtexture" src="assets/textures/uncovered3.png">
+            <img alt="preloadedtexture" src="assets/textures/uncovered4.png">
+            <img alt="preloadedtexture" src="assets/textures/uncovered5.png">
+            <img alt="preloadedtexture" src="assets/textures/uncovered6.png">
+            <img alt="preloadedtexture" src="assets/textures/uncovered7.png">
+            <img alt="preloadedtexture" src="assets/textures/uncovered8.png">
+            <img alt="preloadedtexture" src="assets/textures/pressedcoveredtile.png">
+            <img alt="preloadedtexture" src="assets/textures/pressedquestionmark.png">
+        </div>
+    </section>
 
-    <div class="body">
-        <!-- Game Title -->
-        <h1>MINESWEEPER Version 0.76</h1>
-        <p>Created by Alex Chisa, April-June 2023, ICS4U1a</p>
-
-        <!-- Game Selection Form -->
-        <form class="input" onsubmit="getData(); initGame(); return false">
-            <div class="inputContainer">
-                <!-- Difficulty selector -->
-                <label for="selectDifficulty">Difficulty:</label>
-                <select id="selectDifficulty">
-                    <option value="beginner">Beginner (9x9)</option>
-                    <option value="intermediate">Intermediate (16x16)</option>
-                    <option value="expert">Expert (16x30)</option>
-                    <option value="custom">Custom</option>
-                </select>
-                <!-- Question Marks checkbox -->
-                <label for="questionMarks"> || Question Marks (?)</label>
-                <input type="checkbox" id="questionMarks">
-                <!-- Help Screen -->
-                <span> || <a href="assets/user_manual.pdf" target="_blank">Need Help?</a></span>
-                <!-- Custom Inputs textboxes -->
-                <span id="customInputs" hidden>
-                    <br><br>
-                    <label for="rowsInput">Rows: </label>
-                    <input type="number" value="20" id="rowsInput" required>
-                    <label for="columnsInput">Columns: </label>
-                    <input type="number" value="30" id="columnsInput" required>
-                    <label for="bombsInput">Bombs: </label>
-                    <input type="number" value="145" id="bombsInput" required>
-                </div>
-            </span>
-            
-            <br><br>
-
-            <!-- Start New Game button -->
-            <div>
-                <button id="submitChoice" style="width: 90px; height: 30px;" type="submit">New Game</button>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">Minesweeper</div> <!-- Game Title -->
+            <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
             </div>
-        </form>
-
-        <br><br>
-
-        <!-- Game container -->
-        <div id="gameContainer">
-                <!-- Game HUD container -->
-            <div class="containerTop" style="border-bottom:0px;">
-                <div class="containerMid" style="border-bottom:0px;">
-                    <div class="containerBot">
-                        <div class="gameInfo">
-                            <span id="flags"></span>
-                            <span id="status"></span>
-                            <span id="time"></span>
+        </div>
+        <div class="window-body">
+            <section>
+                <form class="input" onsubmit="getData(); initGame(); return false"> <!-- Game Selection Form -->
+                    <span id="openGameOptions">Game</span>
+                    <span id="openHelpPdf">
+                        <a href="assets/user_manual.pdf" target="_blank">Help</a> <!-- Help Screen -->
+                    </span> 
+                    <div id="inputContainer" style="display: none;">
+                        <label for="selectDifficulty">Difficulty:</label>
+                        <select id="selectDifficulty"> <!-- Difficulty selector -->
+                            <option value="beginner">Beginner (9x9)</option>
+                            <option value="intermediate">Intermediate (16x16)</option>
+                            <option value="expert">Expert (16x30)</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                        <span id="customInputs" hidden> <!-- Custom Inputs textboxes -->
+                            <br>
+                            <label for="rowsInput">Rows: </label>
+                            <input type="number" value="20" id="rowsInput" required>
+                            <br>
+                            <label for="columnsInput">Columns: </label>
+                            <input type="number" value="30" id="columnsInput" required>
+                            <br>
+                            <label for="bombsInput">Bombs: </label>
+                            <input type="number" value="145" id="bombsInput" required>
+                        </span>
+                        <br>
+                        <input type="checkbox" id="questionMarks"> <!-- Question Marks checkbox -->
+                        <label for="questionMarks">Question Marks (?)</label>
+                        <br>
+                        <div>
+                            <button id="submitChoice" type="submit">New Game</button> <!-- Start New Game button -->
+                        </div>
+                    </div>
+                </form>
+            </section>
+    
+            <br>
+    
+            <section>
+                <div id="gameContainer"> <!-- Game container -->
+                    <div class="containerTop" style="border-bottom:0px;"> 
+                        <div class="containerMid" style="border-bottom:0px;">
+                            <div class="containerBot">
+                                <div class="gameInfo"> <!-- Game HUD container -->
+                                    <span id="flags"></span>
+                                    <span id="status"></span>
+                                    <span id="time"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="containerTop" style="border-top:0px;">
+                        <div class="containerMid">
+                            <div class="containerBot">
+                                <table id="gridMatrix" oncontextmenu="return false;"></table> <!-- Game Grid container -->
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Game Grid container -->
-            <div class="containerTop" style="border-top:0px;">
-                <div class="containerMid">
-                    <div class="containerBot">
-                        <table id="gridMatrix" oncontextmenu="return false;"></table>
-                    </div>
-                </div>
-            </div>
+            </section>
         </div>
     </div>
-
-    <!-- Main JS Script -->
-    <script src="scripts/minesweeper.js"></script>
+    <script src="scripts/minesweeper.js"></script> <!-- Main JS Script -->
 </body>
 </html>

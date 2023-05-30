@@ -4,23 +4,47 @@ html {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    animation: loadAnimation ease 1.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+body {
+    background-image: url(../assets/background.png);
+    background-size: cover;     
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+}
+ 
+@keyframes loadAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+     }
+}
+
+h1 {
+    font-size: 24px;
 }
 
 /* ============ Classes ============ */
 
-.body {
-    margin-left: auto;
-    margin-right: auto;
-    width: auto;
-    text-align: center;
-    user-select: none; 
-    width: max-content;
-    padding-left: 20px;
-    padding-right: 20px;
+.titles h3, #inputContainer {
+    display: inline;
 }
 
-.titles h3, .inputContainer {
-    display: inline;
+.tile {
+    animation: loadAnimation ease 0.2s;
+}
+
+.input {
+    text-align: left;
+    height: fit-content;
+    margin-bottom: -5px;
+    margin-left: 3px;
 }
 
 .gameInfo {
@@ -34,6 +58,12 @@ html {
 
 .containerTop, .containerMid, .containerBot {
     border-style: solid;
+}
+
+.window {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .containerTop {
@@ -79,6 +109,10 @@ html {
     display: block;
 }
 
+#selectDifficulty {
+    cursor: pointer;
+}
+
 #gameContainer {
     margin: 0 auto;
     width: fit-content;
@@ -103,8 +137,49 @@ html {
 #status img {
     width: 30px;
     height: 30px;
+    cursor: pointer;
 }
 
 #customInputs input[type=number] {
     width: 50px;
+}
+
+#submitChoice {
+    text-align: center;
+    width: 95px; 
+    height: 30px;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+#openGameOptions, #openHelpPdf a {
+    color: #551A8B !important;
+    text-decoration: underline;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#openGameOptions {
+    margin-right: 3px;
+}
+
+#openGameOptions :active {
+    color: red;
+}
+
+#inputContainer {
+    line-height: 200%  !important;
+    position: absolute;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1;
+    border-color: #bdbdbd;
+    border-style: double;
+    font-size: 13px;
+}
+
+#inputContainer label, #inputContainer option, #inputContainer select, #inputContainer button, #inputContainer input {
+    font-family: Arial;
+    font-size: 13px;
 }
