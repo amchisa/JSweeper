@@ -12,7 +12,7 @@
 </head>
 <body>
     <section>
-        <div id="preload" hidden> <!-- Preloading textures (reduce flickering) -->
+        <div id="preload"> <!-- Preloading textures (reduce flickering) -->
             <img alt="preloadedtexture" src="assets/textures/bomb.png">
             <img alt="preloadedtexture" src="assets/textures/coveredtile.png">
             <img alt="preloadedtexture" src="assets/textures/display0.png">
@@ -88,6 +88,9 @@
                         <br>
                         <input type="checkbox" id="questionMarks"> <!-- Question Marks checkbox -->
                         <label for="questionMarks">Question Marks (?)</label>
+                        <br>
+                        <input type="checkbox" id="debugMode"> <!-- Debug Mode checkbox -->
+                        <label for="debugMode">Enable Debug Mode</label>
                         <br>
                         <div>
                             <button id="submitChoice" type="submit">New Game</button> <!-- Start New Game button -->

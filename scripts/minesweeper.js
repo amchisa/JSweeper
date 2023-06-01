@@ -1,18 +1,20 @@
 // Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.80
 
 /* <------ TODO ------> 
-1. Improve styling, and make the div containing the game draggable like a application on a computer monitor
+1. Make the div containing the game draggable like a application on a computer monitor
 2. Make the mouse dragging press down every tile it is over
     a. Bug when moving mouse too fast, cannot be fixed due to nature of mouse
 */
 
 /* <!------ DECLARING HTML ELEMENTS AND GLOBAL VARIABLES ------> */
+let timerID; // Declaring empty timerID --> Assigned to new timer
 const difficultySelector = document.querySelector("#selectDifficulty");
 const customInputs = document.querySelector("#customInputs");
 const rowInput = document.querySelector("#rowsInput");
 const columnInput = document.querySelector("#columnsInput");
 const bombInput = document.querySelector("#bombsInput");
 const questionMarks = document.querySelector("#questionMarks");
+const enableDebugMode = document.querySelector("#debugMode");
 const flagDisplay = document.querySelector("#flags");
 const timeDisplay = document.querySelector("#time");
 const statusDisplay = document.querySelector("#status");
@@ -20,8 +22,7 @@ const gameContainer = document.querySelector("#gameContainer");
 const inputContainer = document.querySelector("#inputContainer");
 const gridMatrix = document.querySelector("#gridMatrix");
 const openGameOptions = document.querySelector("#openGameOptions");
-const submitButtom = document.querySelector("#submitChoice")
-let timerID; // Declaring empty timerID --> Assigned to new timer
+const inputForm = document.querySelector(".input");
 const gameData = { // GameData object --> Stores player and game information
     rows: 9,
     columns: 9,
@@ -38,6 +39,12 @@ const gameData = { // GameData object --> Stores player and game information
 };
 
 /* <!------ HTML FUNCTIONALITY ------> */
+initGame(); // Creates an initial board on the page upon loading
+
+enableDebugMode.addEventListener("click", function() {
+    gameData.debugMode = !gameData.debugMode; // Toggling debugMode when checkbox is clicked
+    console.clear();
+});
 questionMarks.addEventListener("click", function() {
     gameData.questionMarks = !gameData.questionMarks; // Toggling question marks when checkbox is clicked
 });
@@ -67,12 +74,10 @@ difficultySelector.addEventListener("change", function() {
 });
 inputContainer.addEventListener("mouseleave", function() { 
     inputContainer.style.display = "none"; // Closes gameoptions dropdown menu when the mouse leaves it
-})
-submitChoice.addEventListener("click", function() { 
+});
+inputForm.addEventListener("submit", function() { 
     inputContainer.style.display = "none"; // Closes gameoptions menu when new game is pressed
 });
-
-initGame(); // Creates an initial board on the page upon loading
 
 /* <!------ GAME FUNCTIONS ------> */
 function initGame() { // Creates playing grid in HTML (initializes the game)
@@ -109,6 +114,7 @@ function initGame() { // Creates playing grid in HTML (initializes the game)
             tile.addEventListener("mouseup", clickTile, false); // Event listener for the user's mouse click (mouseup)
             tile.addEventListener("mousedown", clickTile, false); // Event listener for the user's mouse click (mouseup)
             tile.addEventListener("mouseleave", handleMouseLeave, false); // Removes the pressed tile and its event listener when the user moves their mouse out of it
+            //tile.addEventListener("mouseenter", clickTile, false); // Allows user to click and drag mouse around to display pressed tiles
         }
     }
 }
@@ -257,7 +263,7 @@ function clickTile(e) { // Responds to player click event and does the correspon
             setTile(("exploded" + gameData.gameGrid[sourceID[0]][sourceID[1]]), tile); // Appends the tile with the exploded mine asset
         }
 
-    } else if (e.which == 1 && e.type == "mousedown" && (tileState == "coveredtile" || tileState == "questionmark")) {
+    } else if (e.which == 1 && (e.type == "mousedown" /*|| e.type == "mouseenter"*/) && (tileState == "coveredtile" || tileState == "questionmark")) {
         setTile("suspenseface", statusDisplay); // Appends suspense face on left mouse down, providing it meets the conditions
         setTile(("pressed" + getTile(tile)), tile); // Shows pressed tile (temporary)
 
@@ -401,6 +407,7 @@ function removeELs() { // Removes all tile event listeners
             tile.removeEventListener("mouseup", clickTile);
             tile.removeEventListener("mousedown", clickTile);
             tile.removeEventListener("mouseleave", handleMouseLeave);
+            //tile.removeEventListener("mouseenter", clickTile);
         }
     }
 }

@@ -26,10 +26,6 @@ body {
      }
 }
 
-h1 {
-    font-size: 24px;
-}
-
 /* ============ Classes ============ */
 
 .titles h3, #inputContainer {
@@ -43,8 +39,9 @@ h1 {
 .input {
     text-align: left;
     height: fit-content;
-    margin-bottom: -5px;
-    margin-left: 3px;
+    margin-bottom: -9px;
+    margin-left: 6px;
+    user-select: none;
 }
 
 .gameInfo {
@@ -64,6 +61,12 @@ h1 {
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
+}
+
+.window-body {
+    margin: 4px !important;
+    margin-right: 3px !important;
+    margin-bottom: 0.5px !important;
 }
 
 .containerTop {
@@ -137,7 +140,6 @@ h1 {
 #status img {
     width: 30px;
     height: 30px;
-    cursor: pointer;
 }
 
 #customInputs input[type=number] {
@@ -160,13 +162,8 @@ h1 {
 }
 
 #openGameOptions {
-    margin-right: 3px;
+    margin-right: 4px;
 }
-
-#openGameOptions :active {
-    color: red;
-}
-
 #inputContainer {
     line-height: 200%  !important;
     position: absolute;
@@ -177,9 +174,14 @@ h1 {
     border-color: #bdbdbd;
     border-style: double;
     font-size: 13px;
+    margin-left: -5px;
 }
 
 #inputContainer label, #inputContainer option, #inputContainer select, #inputContainer button, #inputContainer input {
     font-family: Arial;
     font-size: 13px;
+}
+
+#preload {
+    display: none;
 }
