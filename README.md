@@ -1,4 +1,4 @@
-# Minesweeper
+# JSweeper
 My personal attempt at creating a minesweeper clone which is faithful to the original from my experience playing over the years. 
 
 ## Description
