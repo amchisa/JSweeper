@@ -1,5 +1,5 @@
 # Minesweeper
-This project has been my personal attempt at creating a minesweeper clone which is faithful to the original from my experience playing over the years. 
+My personal attempt at creating a minesweeper clone which is faithful to the original from my experience playing over the years. 
 
 ## Description
 Minesweeper is a game where you are tasked with clearing out an area full of randomly placed bombs using the information given to you by the game board. My version of this game includes various quality of life features, such as an included help manual, a suite of various status icons based on your current actions, and a integrated debug mode, which can be toggled in game, as well as many other features that are notably lacking from popular browser versions of this game. 
