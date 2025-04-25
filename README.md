@@ -16,20 +16,18 @@ A faithful browser-based recreation of the classic Windows XP Minesweeper, built
 JSweeper adds various quality of life features, such as an included help manual, a suite of various status icons based on your current actions, and a integrated debug mode, which can be toggled in game, as well as many other features that are notably lacking from popular browser versions of this game. 
 
 ## :page_facing_up: Additional information
-This game requires the latest version of Google Chrome or Firefox to function as intended. I cannot guarantee that this game will function as intended on other browsers, which is due to a lack of development time (this game was completed as a final project for one of my courses). 
-
-If while playing you encounter a bug that cannot be fixed by reloading the page, toggling the debug mode in the game settings and opening inspect element to the console section will allow you to see a report of what the program is computing at any time during your gameplay as well as any errors that are occuring.
+- JSweeper works best on the latest versions of Chrome or Firefox. Other browsers haven’t been fully tested and may result in unexpected issues.
+- This project was originally developed as a final assignment for a course, so cross-browser compatibility and extended testing were limited.
+- If you run into a bug that doesn’t go away after refreshing the page, try enabling Debug Mode from the game settings. Then open your browser’s developer console to view real-time logs and error messages—this can help pinpoint what’s going wrong during gameplay.
 
 ## :zap: Usage
-This project can be downloaded and run directly off of any web browser. Follow the steps below to set it up. 
 
 ###  :electric_plug: Installation
-- Clone the repository using the following command:
-```
+1. Clone the repository using the following command:
+```bash
 $ git clone https://github.com/amchisa/JSweeper
 ```
-- Open the installation folder and locate the minesweeper.html file (see [file structure](#file_folder-file-structure))
-- Run the file on your web browser of choice to begin playing the game.
+2. Open `minesweeper.html` in your web browser (see [file structure](#file_folder-file-structure)) to begin playing.
 
 ##  :wrench: Development
 This project was built as a final course assignment with a focus on replicating the visual and functional details of the classic Windows XP Minesweeper. It is written using vanilla JavaScript, HTML, and CSS, with no external frameworks or libraries.
