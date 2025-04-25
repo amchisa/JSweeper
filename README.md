@@ -1,9 +1,7 @@
 # JSweeper
-
-A faithful web-game recreation of Minesweeper for Windows XP.
+A faithful browser-based recreation of the classic Windows XP Minesweeper, built with HTML, CSS, and vanilla JavaScript.
 
 ## :ledger: Index
-
 - [About](#beginner-about)
 - [Additional Information](#page_facing_up-additional-information)
 - [Usage](#zap-usage)
@@ -34,7 +32,6 @@ $ git clone https://github.com/amchisa/JSweeper
 - Run the file on your web browser of choice to begin playing the game.
 
 ##  :wrench: Development
-
 This project was built as a final course assignment with a focus on replicating the visual and functional details of the classic Windows XP Minesweeper. It is written using vanilla JavaScript, HTML, and CSS, with no external frameworks or libraries.
 
 If you’re looking to explore how the game logic works, add new features, or tweak the visuals, the codebase is organized to make it as accessible as possible for new contributors. Feel free to fork the repo and experiment.
@@ -102,7 +99,15 @@ Here is the file structure for the project. File descriptions are given below.
   A: Yes. Use the `game` button available in the game UI to begin a new round without needing to reload the browser window.
 
 ##  :camera: Gallery
+Here are a few gameplay screenshots showcasing JSweeper in action:
 
+<p float="left">
+  <img src="gallery/medium_1.png" alt="Medium Game" height="400"/>
+  <img src="gallery/large_1.png" alt="Large Game" height="400"/>
+  <img src="gallery/custom_1.png" alt="Custom Game" height="400"/>
+  <img src="gallery/win_1.png" alt="Won Small Game" height="400"/>
+  <img src="gallery/fail_1.png" alt="Lost Small Game" height="400"/>
+</p>
 
 ## :star2: Credit/Acknowledgment
 - Credit to @ramantehlan for the README template.
