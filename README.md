@@ -22,6 +22,10 @@ JSweeper adds various quality of life features, such as an included help manual,
 
 ## :zap: Usage
 
+You can play the game directly from the web here: [Play JSweeper](https://amchisa.github.io/JSweeper/)
+
+If you'd prefer to have a local copy, follow the steps below.
+
 ###  :electric_plug: Installation
 1. Clone the repository using the following command:
 ```bash
