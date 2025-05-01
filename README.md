@@ -27,7 +27,7 @@ JSweeper adds various quality of life features, such as an included help manual,
 ```bash
 $ git clone https://github.com/amchisa/JSweeper
 ```
-2. Open `minesweeper.html` in your web browser (see [file structure](#file_folder-file-structure)) to begin playing.
+2. Open `index.html` in your web browser (see [file structure](#file_folder-file-structure)) to begin playing.
 
 ##  :wrench: Development
 This project was built as a final course assignment with a focus on replicating the visual and functional details of the classic Windows XP Minesweeper. It is written using vanilla JavaScript, HTML, and CSS, with no external frameworks or libraries.
@@ -52,13 +52,13 @@ Here is the file structure for the project. File descriptions are given below.
 │   └── minesweeper.js
 ├── styles
 │   └── minesweeper.css
-├── minesweeper.html
+├── index.html
 └── README.md
 ```
 
 | No | File Name | Details 
 |----|------------|-------|
-| 1  | minesweeper.html | Main page
+| 1  | index.html | Main page
 | 2  | textures | Contains game textures and icons
 | 3  | pseudocode & flowcharts | Abstract descriptions of game logic
 | 4  | gallery | Game screenshots for README
@@ -78,7 +78,7 @@ Here is the file structure for the project. File descriptions are given below.
 
 - **Q: Why are some textures or icons not displaying?**
    
-  A: This may be due to incorrect relative file paths if you're running the game locally. Make sure all folders (`assets`, `scripts`, `styles`) are in the same directory as `minesweeper.html`.
+  A: This may be due to incorrect relative file paths if you're running the game locally. Make sure all folders (`assets`, `scripts`, `styles`) are in the same directory as `index.html`.
 
 - **Q: Can I modify the game or contribute to development?**
    
