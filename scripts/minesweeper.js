@@ -85,12 +85,16 @@ inputForm.addEventListener("submit", function() {
     inputContainer.style.display = "none"; // Closes gameoptions menu when new game is pressed
 });
 titleBar.addEventListener("mousedown", (e) => { // Allow game window dragging when mousedown on the titlebar
-    isDragging = true;
-    offsetX = e.clientX - gameWindow.offsetLeft;
-    offsetY = e.clientY - gameWindow.offsetTop;
+    if (e.button == 0) {
+        isDragging = true;
+        offsetX = e.clientX - gameWindow.offsetLeft;
+        offsetY = e.clientY - gameWindow.offsetTop;
+    }
 });
 titleBar.addEventListener("mouseup", (e) => { // Stop game window dragging when mouseup
-    isDragging = false;
+    if (e.button == 0) {
+        isDragging = false;
+    }
 });
 document.addEventListener("mousemove", (e) => { // Dynamically position game window when drag clicking
     if (isDragging) {
