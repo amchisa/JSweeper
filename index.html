@@ -7,46 +7,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styles/minesweeper.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/xp.css"> <!-- Custom Stylesheet -->
-    <link rel="icon" type="image/x-icon" href="assets/textures/flag.png"> 
+    <link rel="icon" type="image/x-icon" href="assets/textures/flag.png">
+    <link rel="preload" href="assets/background.png" as="image"> 
     <title>Minesweeper</title>   
 </head>
 <body>
     <section>
         <div id="preload"> <!-- Preloading textures (reduce flickering) -->
-            <img alt="preloadedtexture" src="assets/textures/bomb.png">
-            <img alt="preloadedtexture" src="assets/textures/coveredtile.png">
-            <img alt="preloadedtexture" src="assets/textures/display0.png">
-            <img alt="preloadedtexture" src="assets/textures/deadface.png">
-            <img alt="preloadedtexture" src="assets/textures/display1.png">
-            <img alt="preloadedtexture" src="assets/textures/display2.png">
-            <img alt="preloadedtexture" src="assets/textures/display4.png">
-            <img alt="preloadedtexture" src="assets/textures/display3.png">
-            <img alt="preloadedtexture" src="assets/textures/display5.png">
-            <img alt="preloadedtexture" src="assets/textures/display6.png">
-            <img alt="preloadedtexture" src="assets/textures/display7.png">
-            <img alt="preloadedtexture" src="assets/textures/display8.png">
-            <img alt="preloadedtexture" src="assets/textures/display9.png">
-            <img alt="preloadedtexture" src="assets/textures/displaynegative.png">
-            <img alt="preloadedtexture" src="assets/textures/explodedbomb.png">
-            <img alt="preloadedtexture" src="assets/textures/flag.png">
-            <img alt="preloadedtexture" src="assets/textures/happyface.png">
-            <img alt="preloadedtexture" src="assets/textures/notabomb.png">
-            <img alt="preloadedtexture" src="assets/textures/pressedface.png">
-            <img alt="preloadedtexture" src="assets/textures/pressedquestionmark.png">
-            <img alt="preloadedtexture" src="assets/textures/questionmark.png">
-            <img alt="preloadedtexture" src="assets/textures/sunglassesface.png">
-            <img alt="preloadedtexture" src="assets/textures/suspenseface.png">
-            <img alt="preloadedtexture" src="assets/textures/uncovered0.png">
-            <img alt="preloadedtexture" src="assets/textures/uncovered1.png">
-            <img alt="preloadedtexture" src="assets/textures/uncovered2.png">
-            <img alt="preloadedtexture" src="assets/textures/uncovered3.png">
-            <img alt="preloadedtexture" src="assets/textures/uncovered4.png">
-            <img alt="preloadedtexture" src="assets/textures/uncovered5.png">
-            <img alt="preloadedtexture" src="assets/textures/uncovered6.png">
-            <img alt="preloadedtexture" src="assets/textures/uncovered7.png">
-            <img alt="preloadedtexture" src="assets/textures/uncovered8.png">
-            <img alt="preloadedtexture" src="assets/textures/pressedcoveredtile.png">
-            <img alt="preloadedtexture" src="assets/textures/pressedquestionmark.png">
+            <img alt="preloadedtexture" src="assets/textures/bomb.png"/>
+            <img alt="preloadedtexture" src="assets/textures/coveredtile.png"/>
+            <img alt="preloadedtexture" src="assets/textures/display0.png"/>
+            <img alt="preloadedtexture" src="assets/textures/deadface.png"/>
+            <img alt="preloadedtexture" src="assets/textures/display1.png"/>
+            <img alt="preloadedtexture" src="assets/textures/display2.png"/>
+            <img alt="preloadedtexture" src="assets/textures/display4.png"/>
+            <img alt="preloadedtexture" src="assets/textures/display3.png"/>
+            <img alt="preloadedtexture" src="assets/textures/display5.png"/>
+            <img alt="preloadedtexture" src="assets/textures/display6.png"/>
+            <img alt="preloadedtexture" src="assets/textures/display7.png"/>
+            <img alt="preloadedtexture" src="assets/textures/display8.png"/>
+            <img alt="preloadedtexture" src="assets/textures/display9.png"/>
+            <img alt="preloadedtexture" src="assets/textures/displaynegative.png"/>
+            <img alt="preloadedtexture" src="assets/textures/explodedbomb.png"/>
+            <img alt="preloadedtexture" src="assets/textures/flag.png"/>
+            <img alt="preloadedtexture" src="assets/textures/happyface.png"/>
+            <img alt="preloadedtexture" src="assets/textures/notabomb.png"/>
+            <img alt="preloadedtexture" src="assets/textures/pressedface.png"/>
+            <img alt="preloadedtexture" src="assets/textures/pressedquestionmark.png"/>
+            <img alt="preloadedtexture" src="assets/textures/questionmark.png"/>
+            <img alt="preloadedtexture" src="assets/textures/sunglassesface.png"/>
+            <img alt="preloadedtexture" src="assets/textures/suspenseface.png"/>
+            <img alt="preloadedtexture" src="assets/textures/uncovered0.png"/>
+            <img alt="preloadedtexture" src="assets/textures/uncovered1.png"/>
+            <img alt="preloadedtexture" src="assets/textures/uncovered2.png"/>
+            <img alt="preloadedtexture" src="assets/textures/uncovered3.png"/>
+            <img alt="preloadedtexture" src="assets/textures/uncovered4.png"/>
+            <img alt="preloadedtexture" src="assets/textures/uncovered5.png"/>
+            <img alt="preloadedtexture" src="assets/textures/uncovered6.png"/>
+            <img alt="preloadedtexture" src="assets/textures/uncovered7.png"/>
+            <img alt="preloadedtexture" src="assets/textures/uncovered8.png"/>
+            <img alt="preloadedtexture" src="assets/textures/pressedcoveredtile.png"/>
+            <img alt="preloadedtexture" src="assets/textures/pressedquestionmark.png"/>
         </div>
     </section>
 
@@ -56,7 +57,7 @@
             <div class="title-bar-controls">
             <button aria-label="Minimize"></button>
             <button aria-label="Maximize"></button>
-            <button aria-label="Close"></button>
+            <button aria-label="Close" onclick="window.close()"></button>
             </div>
         </div>
         <div class="window-body">

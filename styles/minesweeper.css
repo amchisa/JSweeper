@@ -4,7 +4,7 @@ html {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    animation: loadAnimation ease 1.5s;
+    animation: loadAnimation ease 1.0s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }
@@ -15,6 +15,7 @@ body {
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
+    user-select: none;
 }
  
 @keyframes loadAnimation {
@@ -23,17 +24,13 @@ body {
     }
     100% {
         opacity: 1;
-     }
+    }
 }
 
 /* ============ Classes ============ */
 
 .titles h3, #inputContainer {
     display: inline;
-}
-
-.tile {
-    animation: loadAnimation ease 0.2s;
 }
 
 .input {

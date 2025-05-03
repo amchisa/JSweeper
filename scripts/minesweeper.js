@@ -60,11 +60,11 @@ statusDisplay.addEventListener("mouseup", function() {
     initGame(); // Starting new game
 });
 statusDisplay.addEventListener("mouseleave", (e) => {
-    if (e.which == 1) {
+    if ((e.buttons & 1) == 1) {
         statusDisplay.getElementsByTagName('img')[0].src = `assets/textures/happyface.png`; // Status face button is back to normal if user moves mouse suddenly out of range while pressed down
     }
 });
-gameContainer.addEventListener("mouseleave", function() {
+gridMatrix.addEventListener("mouseleave", function() {
     if (getTile(statusDisplay) == "suspenseface") {
         statusDisplay.getElementsByTagName('img')[0].src = `assets/textures/happyface.png`; // Prevents suspense face from getting stuck until mouse comes back to the game
     }
@@ -112,9 +112,9 @@ function initGame() { // Creates playing grid in HTML (initializes the game)
             tile.innerHTML = '<img src="assets/textures/coveredtile.png" draggable="false">'; // Adds blank tile for every space on the grid
             tile.id = [tr, td]; // Gives each tile a unique id pertaining to its position on the grid
             tile.addEventListener("mouseup", clickTile, false); // Event listener for the user's mouse click (mouseup)
-            tile.addEventListener("mousedown", clickTile, false); // Event listener for the user's mouse click (mouseup)
+            tile.addEventListener("mousedown", clickTile, false); // Event listener for the user's mouse click (mousedown)
             tile.addEventListener("mouseleave", handleMouseLeave, false); // Removes the pressed tile and its event listener when the user moves their mouse out of it
-            //tile.addEventListener("mouseenter", clickTile, false); // Allows user to click and drag mouse around to display pressed tiles
+            tile.addEventListener("mouseenter", clickTile, false); // Allows user to click and drag mouse around to display pressed tiles
         }
     }
 }
@@ -240,7 +240,7 @@ function clickTile(e) { // Responds to player click event and does the correspon
     let tile = document.getElementById(sourceID); // Finds the tile using its sourceID
     sourceID = sourceID.split(","); // Splits ID into set of coordinates that can be used to locate the corresponding value on the gameGrid
 
-    if (gameData.initialClick && e.which == 1 && e.type == "mouseup") {
+    if (gameData.initialClick && e.button == 0 && e.type == "mouseup") {
         generateGrid(sourceID); // Generates random grid
         gameData.initialClick = false; // Initial click is false
     }
@@ -248,7 +248,7 @@ function clickTile(e) { // Responds to player click event and does the correspon
     let tileState = getTile(tile); // Finding what asset is present on the tile
     let gridState = gameData.gameGrid[sourceID[0]][sourceID[1]]; // Find tile cell position in the gameGrid
 
-    if (e.which == 1 && e.type == "mouseup") {
+    if (e.button == 0 && e.type == "mouseup") {
         setTile("happyface", statusDisplay);
         gameData.debugMode ? console.log(sourceID) : null; // Logs sourceID of tile left clicked if debugMode is true
         gameData.debugMode ? console.log("Tiles Remaining: " + gameData.tilesRemaining) : null; // Log tiles remaining if debugMode is true
@@ -263,11 +263,11 @@ function clickTile(e) { // Responds to player click event and does the correspon
             setTile(("exploded" + gameData.gameGrid[sourceID[0]][sourceID[1]]), tile); // Appends the tile with the exploded mine asset
         }
 
-    } else if (e.which == 1 && (e.type == "mousedown" /*|| e.type == "mouseenter"*/) && (tileState == "coveredtile" || tileState == "questionmark")) {
+    } else if (((e.buttons & 1) == 1) && (e.type == "mousedown" || e.type == "mouseenter") && (tileState == "coveredtile" || tileState == "questionmark")) {
         setTile("suspenseface", statusDisplay); // Appends suspense face on left mouse down, providing it meets the conditions
         setTile(("pressed" + getTile(tile)), tile); // Shows pressed tile (temporary)
 
-    } else if (e.which == 3 && e.type == "mousedown") {
+    } else if (e.button == 2 && e.type == "mousedown") {
         gameData.debugMode ? console.log(sourceID) : null; // Logs sourceID of tile right clicked if debugMode is true
 
         switch (tileState) {
@@ -407,7 +407,7 @@ function removeELs() { // Removes all tile event listeners
             tile.removeEventListener("mouseup", clickTile);
             tile.removeEventListener("mousedown", clickTile);
             tile.removeEventListener("mouseleave", handleMouseLeave);
-            //tile.removeEventListener("mouseenter", clickTile);
+            tile.removeEventListener("mouseenter", clickTile);
         }
     }
 }
