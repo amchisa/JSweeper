@@ -1,10 +1,4 @@
-// Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 0.80
-
-/* <------ TODO ------> 
-1. Make the div containing the game draggable like a application on a computer monitor
-2. Make the mouse dragging press down every tile it is over
-    a. Bug when moving mouse too fast, cannot be fixed due to nature of mouse
-*/
+// Created by Alex Chisa, April-June 2023, ICS4U1a || MINESWEEPER Version 1.00
 
 /* <!------ DECLARING HTML ELEMENTS AND GLOBAL VARIABLES ------> */
 let timerID; // Declaring empty timerID --> Assigned to new timer
