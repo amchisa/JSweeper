@@ -8,6 +8,10 @@
 
 /* <!------ DECLARING HTML ELEMENTS AND GLOBAL VARIABLES ------> */
 let timerID; // Declaring empty timerID --> Assigned to new timer
+let offsetX = 0; // Game window drag X offset
+let offsetY = 0; // Game window drag Y offset
+let isDragging = false; // Game window drag status
+
 const difficultySelector = document.querySelector("#selectDifficulty");
 const customInputs = document.querySelector("#customInputs");
 const rowInput = document.querySelector("#rowsInput");
@@ -19,6 +23,8 @@ const flagDisplay = document.querySelector("#flags");
 const timeDisplay = document.querySelector("#time");
 const statusDisplay = document.querySelector("#status");
 const gameContainer = document.querySelector("#gameContainer");
+const gameWindow = document.querySelector("#gameWindow");
+const titleBar = document.querySelector("#gameWindowTitleBar");
 const inputContainer = document.querySelector("#inputContainer");
 const gridMatrix = document.querySelector("#gridMatrix");
 const openGameOptions = document.querySelector("#openGameOptions");
@@ -77,6 +83,20 @@ inputContainer.addEventListener("mouseleave", function() {
 });
 inputForm.addEventListener("submit", function() { 
     inputContainer.style.display = "none"; // Closes gameoptions menu when new game is pressed
+});
+titleBar.addEventListener("mousedown", (e) => { // Allow game window dragging when mousedown on the titlebar
+    isDragging = true;
+    offsetX = e.clientX - gameWindow.offsetLeft;
+    offsetY = e.clientY - gameWindow.offsetTop;
+});
+titleBar.addEventListener("mouseup", (e) => { // Stop game window dragging when mouseup
+    isDragging = false;
+});
+document.addEventListener("mousemove", (e) => { // Dynamically position game window when drag clicking
+    if (isDragging) {
+        gameWindow.style.left = `${e.clientX - offsetX}px`;
+        gameWindow.style.top = `${e.clientY - offsetY}px`;
+    }
 });
 
 /* <!------ GAME FUNCTIONS ------> */
