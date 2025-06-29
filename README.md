@@ -108,7 +108,7 @@ Here are a few gameplay screenshots showcasing JSweeper in action:
   <img src="gallery/large_1.png" alt="Large Game" height="400"/>
   <img src="gallery/custom_1.png" alt="Custom Game" height="400"/>
   <img src="gallery/win_1.png" alt="Won Small Game" height="400"/>
-  <img src="gallery/fail_1.png" alt="Lost Small Game" height="400"/>
+  <!-- Unused for formatting purposes <img src="gallery/fail_1.png" alt="Lost Small Game" height="400"/>-->
 </p>
 
 ## :star2: Credit/Acknowledgment
